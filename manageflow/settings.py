@@ -11,21 +11,39 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import warnings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+def env_to_bool(s, default):
+    v = os.getenv(s, default)
+    if v not in ("", "True", "False"):
+        msg = "Unexpected value %s=%s, use 'True' or 'False'" % (s, v)
+        raise Exception(msg)
+    return v == "True"
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'lwhcc2oadip7(+s9wd#a4q23@5_h5_fg^(q(lkn()g&^_!s_@d'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+def env_to_int(s, default):
+    v = os.getenv(s, default)
+    if v == "None":
+        return None
 
-ALLOWED_HOSTS = []
+    return int(v)
+
+
+SECRET_KEY = os.getenv("SECRET_KEY", "---")
+DEBUG = env_to_bool("DEBUG", "True")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "admin@example.org")
+REGISTRATION_OPEN = env_to_bool("REGISTRATION_OPEN", "True")
+VERSION = ""
+with open(os.path.join(BASE_DIR, "CHANGELOG.md"), encoding="utf-8") as f:
+    for line in f.readlines():
+        if line.startswith("## v"):
+            VERSION = line.split()[1]
+            break
 
 
 # Application definition
@@ -37,6 +55,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # include the providers you want to enable:
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.google',
+    'compressor',
+    'manageflow.accounts',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +81,7 @@ ROOT_URLCONF = 'manageflow.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,10 +89,35 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+# Authentication Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
+
 
 WSGI_APPLICATION = 'manageflow.wsgi.application'
 
@@ -76,7 +128,7 @@ WSGI_APPLICATION = 'manageflow.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        "NAME": os.getenv("DB_NAME", os.path.join(BASE_DIR, 'db.sqlite3')),
     }
 }
 
@@ -99,6 +151,39 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Database engine
+if os.getenv("DB") == "postgres":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.getenv("DB_HOST", ""),
+            "PORT": os.getenv("DB_PORT", ""),
+            "NAME": os.getenv("DB_NAME", "manageflow"),
+            "USER": os.getenv("DB_USER", "postgres"),
+            "PASSWORD": os.getenv("DB_PASSWORD", ""),
+            "CONN_MAX_AGE": env_to_int("DB_CONN_MAX_AGE", "0"),
+            "TEST": {"CHARSET": "UTF8"},
+            "OPTIONS": {
+                "sslmode": os.getenv("DB_SSLMODE", "prefer"),
+                "target_session_attrs": os.getenv(
+                    "DB_TARGET_SESSION_ATTRS", "read-write"
+                ),
+            },
+        }
+    }
+
+if os.getenv("DB") == "mysql":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "HOST": os.getenv("DB_HOST", ""),
+            "PORT": os.getenv("DB_PORT", ""),
+            "NAME": os.getenv("DB_NAME", "manageflow"),
+            "USER": os.getenv("DB_USER", "root"),
+            "PASSWORD": os.getenv("DB_PASSWORD", ""),
+            "TEST": {"CHARSET": "UTF8"},
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -113,8 +198,35 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ROOT = os.getenv("SITE_ROOT", "http://localhost:8000")
+SITE_NAME = os.getenv("SITE_NAME", "Manageflow")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "static-collected")
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+)
+COMPRESS_OFFLINE = True
+COMPRESS_CSS_HASHING_METHOD = "content"
+
+# Email integration
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT = env_to_int("EMAIL_PORT", "587")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env_to_bool("EMAIL_USE_TLS", "True")
+EMAIL_USE_VERIFICATION = env_to_bool("EMAIL_USE_VERIFICATION", "True")
+
+# Local shell commands
+SHELL_ENABLED = env_to_bool("SHELL_ENABLED", "False")
+
+if os.path.exists(os.path.join(BASE_DIR, "manageflow/local_settings.py")):
+    from .local_settings import *
+else:
+    warnings.warn("local_settings.py not found, using defaults")
