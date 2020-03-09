@@ -1,24 +1,63 @@
 # manageflow
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+manageflow is a task manager app for a group of users with multiple roles. (WIP)
 
-Things you may want to cover:
+The building version are:
 
-* Version
+* Python 3.6+
+* Django 3
 
-* System dependencies
+## Setting Up for Development
 
-* Configuration
+These are instructions for setting up this project
+in development environment, may vary depending on your operating system.
 
-* Database creation
+* install Python on your system, you can also use [conda](https://docs.conda.io/en/latest/) or [pyenv](https://github.com/pyenv/pyenv):
 
-* Database initialization
+    You’ll need to make sure you have python and pip available. You can check this by running:
 
-* How to run the test suite
+        $ python --version
+        Python 3.7.6
+        $ pip --version
+        pip 20.0.2
 
-* Services (job queues, cache servers, search engines, etc.)
+* install [pipenv](https://github.com/pypa/pipenv):
 
-* Deployment instructions
+        $ pip install pipenv
 
-* ...
+* check out project code:
+
+        $ git clone https://github.com/jitingcn/manageflow
+        $ cd manageflow
+
+* prepare pipenv environment and install requirements
+
+        $ pipenv shell
+        (manageflow) $ pipenv install --dev
+
+* manageflow is configured to use a SQLite database by default. To use
+  PostgreSQL or MySQL database, create and edit `manageflow/local_settings.py` file.
+  There is a template you can copy and edit as needed:
+
+        (manageflow) $ cp manageflow/local_settings.py.example manageflow/local_settings.py
+
+* create database tables and the superuser account:
+
+        (manageflow) $ ./manage.py migrate
+        (manageflow) $ ./manage.py createsuperuser
+
+* run development server:
+
+        $ ./manage.py runserver
+
+## Configuration
+
+## Database Configuration
+
+## Running in Production
+
+- How to run the test suite
+
+- Services (job queues, cache servers, search engines, etc.)
+
+- Deployment instructions
