@@ -10,6 +10,3 @@ django = "*"
 pillow = "*"
 django-compressor = "*"
 django-allauth = "*"
-
-[requires]
-python_version = "3.7"
