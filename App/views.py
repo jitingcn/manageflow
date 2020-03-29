@@ -7,3 +7,6 @@ def index(request):
 
 def faqs(request):
     return HttpResponse("<h1> FAQ's </h1>")
+
+def loggedin(request):
+    return HttpResponse("<h1> You are logged in </h1>")

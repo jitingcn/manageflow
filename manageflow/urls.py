@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import include, url
+from Accounts import views as v
 from App import views
 
 urlpatterns = [
     path('', include("App.urls")),
+    path("register/", v.register, name="Register" ),#path register user
+    path('', include("django.contrib.auth.urls")), # path for login/logout
     path('admin/', admin.site.urls),
 
 ]
