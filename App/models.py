@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 #This will be the basis of our task manage system. [WIP]
 class ToDoList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
 
     def __str__(self):
