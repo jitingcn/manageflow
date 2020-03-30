@@ -260,7 +260,7 @@ EMAIL_USE_VERIFICATION = env_to_bool("EMAIL_USE_VERIFICATION", "True")
 # Local shell commands
 SHELL_ENABLED = env_to_bool("SHELL_ENABLED", "False")
 
-#if os.path.exists(os.path.join(BASE_DIR, "manageflow/local_settings.py")):
-#    from .local_settings import *
-#else:
-#    warnings.warn("local_settings.py not found, using defaults")
+if os.path.exists(os.path.join(BASE_DIR, "manageflow/local_settings.py")):
+   from .local_settings import *
+else:
+   warnings.warn("local_settings.py not found, using defaults")
