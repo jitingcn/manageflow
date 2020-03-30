@@ -21,8 +21,7 @@
   {% endcompress %}
 </head>
 <body class="page-{{ page }}">
-  {% debug_warning %}
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">{% if request.user.is_authenticated %}
         authenticated
       {% else %}

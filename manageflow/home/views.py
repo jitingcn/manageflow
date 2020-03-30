@@ -16,7 +16,7 @@ def index(request):
     #     projects = list(request.profile.projects())
     #
     #     ctx = {"page": "projects", "projects": projects}
-    #     return render(request, "home/projects.haml", ctx)
+    #     return render(request, "home/projects.html", ctx)
 
     ctx = {
         "page": "welcome",
@@ -27,7 +27,7 @@ def index(request):
 
 
 def serve_doc(request, doc="introduction"):
-    path = os.path.join(settings.BASE_DIR, "templates/docs", doc + ".haml")
+    path = os.path.join(settings.BASE_DIR, "templates/docs", doc + ".html")
     if not os.path.exists(path):
         raise Http404("not found")
 
@@ -49,4 +49,4 @@ def serve_doc(request, doc="introduction"):
         "first_line": content.split("\n")[0],
     }
 
-    return render(request, "home/docs_single.haml", ctx)
+    return render(request, "home/docs_single.html", ctx)
