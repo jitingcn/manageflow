@@ -58,10 +58,20 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_filters',
     "crispy_forms",
-    'App.apps.AppConfig',
-    'Accounts.apps.AccountsConfig',
+    'manageflow.accounts',
+    'manageflow.home',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # include the providers you want to enable:
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.google',
+    'compressor',
 ]
 CRISPY_TEMPLATE_PACK="bootstrap4"
+
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,9 +93,18 @@ STATIC_URL = '/static/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "App/../templates"), ],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'OPTIONS': {
+            'loaders': (
+                # ('django.template.loaders.cached.Loader', (
+                #     'hamlpy.template.loaders.HamlPyFilesystemLoader',
+                #     'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+                # )),
+                'hamlpy.template.loaders.HamlPyFilesystemLoader',
+                'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ),
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -97,10 +116,11 @@ TEMPLATES = [
     },
 ]
 
+HAMLPY_ATTR_WRAPPER = '"'
+
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
@@ -222,8 +242,12 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 )
-COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = False
 COMPRESS_CSS_HASHING_METHOD = "content"
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
 
 # Email integration
 EMAIL_HOST = os.getenv("EMAIL_HOST", "")

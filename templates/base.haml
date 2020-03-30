@@ -1,0 +1,88 @@
+!!! 5
+- load compress static mf_extras
+%html
+%head
+  %meta(charset="UTF-8" )
+  %title<
+    {% block title %}{% site_name %} - Manage Your group work flow{% endblock %}
+  - block description
+    %meta(name="description" content="")
+  - block keywords
+    %meta(name="keywords" content="")
+  %meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+  %meta(name="application-name" content="{% site_name %}" )
+  - block head
+  - compress css
+    %link(rel="stylesheet" href="{% static 'bootstrap/bootstrap.scss' %}" type="text/x-scss" )
+    %link(rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss")
+    -#%link(rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" )
+
+%body(class="page-#{page}")
+  %nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-primary
+    <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
+      {% if request.user.is_authenticated %}
+        authenticated
+      {% else %}
+        manageflow
+      {% endif %}
+    </a>
+    %button.navbar-toggler(
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    )
+      %span.sr-only Toggle navigation
+      %span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbarSupportedContent
+      %ul.navbar-nav.mr-auto
+        - if request.user.is_authenticated
+          %li.nav-item
+            %a.nav-link(href="#") Project
+          %li.nav-item
+            %a.nav-link(href="#") Link1
+          %li.nav-item
+            %a.nav-link(href="#") Link2
+      %ul.navbar-nav.ml-auto
+        %li.nav-item.ml-sm-2
+          %a.nav-link(href="{% url 'mf-index' %}") Docs
+        - if request.user.is_authenticated
+          %li.nav-item.dropdown
+            %a.nav-link.dropdown-toggle#navbar_dropdown(
+              href="#" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"
+            )
+              Dropdown
+            .dropdown-menu(aria-labelledby="navbar_dropdown")
+              - if request.user.is_superuser
+                %a.dropdown-item(href="{% url 'admin:index' %}" ) Site Administration
+                %div.dropdown-divider
+              .dropdown-header<
+                Teams
+              -# for team in request.profile.team
+              .dropdown-divider
+              %a.dropdown-item(href="{% url 'mf-index' %}" ) Account Settings
+              %a.dropdown-item(href="{% url 'logout' %}" ) Log Out
+        - elif page != "login"
+          %li.nav-item.ml-sm-2
+            %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" ) Sign In
+        - if registration_open
+          - if page == "welcome" or page == "login"
+            %li.nav-item.ml-sm-2
+              %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}") Sign Up
+  - block containers
+    %main.container(role="main" )
+      - block content
+        .mt-3
+          %h1 Example Text
+  - block footer
+    %footer.footer
+      .container<
+        %span.text-muted<
+          Example footer text
+  - block scripts
+    - compress js
+      %script(src="{% static 'js/jquery-3.4.1.js' %}")
+      %script(src="{% static 'js/bootstrap.bundle.js' %}")
