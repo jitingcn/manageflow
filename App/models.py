@@ -26,7 +26,7 @@ class Group(models.Model):
         return self.name
 
 
-class Members(models.Model):
+class Member(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
 

@@ -3,10 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import CreateNewList
+from .models import ToDoList, Item
+#from .filters import UserFilter
 
 # Create your views here.
-from .models import ToDoList
-
+def board(request, id):
+	ls = ToDoList.objects.get(id=id)
+	return render(request, "board.html", {"ls":ls})
 
 def index(request):
     return render(request, 'index.html')
