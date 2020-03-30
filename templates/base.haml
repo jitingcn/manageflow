@@ -55,7 +55,7 @@
               aria-haspopup="true" aria-expanded="false"
             )
               = user.get_username
-            .dropdown-menu(aria-labelledby="navbar_dropdown")
+            .dropdown-menu.dropdown-menu-right(aria-labelledby="navbar_dropdown")
               - if request.user.is_superuser
                 %a.dropdown-item(href="{% url 'admin:index' %}" ) Site Administration
                 %div.dropdown-divider
