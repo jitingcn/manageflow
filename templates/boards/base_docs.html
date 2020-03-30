@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load mf_extras %}
+
+{% block title %}Docs - {% site_name %}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-sm-3">
+      <ul class="docs-nav">
+        <li class="nav-header">Site</li>
+        <li {% if section == "introduction" %} class="active"{% endif %}>
+          <a href="{% url 'mf-docs' %}">Introduction</a>
+        </li>
+        {% include "boards/docs_item.html" with slug="example" title="Example article" %}
+        {% include "boards/docs_item.html" with slug="faq" title="Frequently Asked Questions" %}
+        <li class="nav-header">Role</li>
+        <li class="nav-header">Workflow</li>
+      </ul>
+    </div>
+    <div class="col-sm-9">
+      {% block docs_content %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

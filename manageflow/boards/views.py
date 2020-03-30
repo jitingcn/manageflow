@@ -49,4 +49,12 @@ def serve_doc(request, doc="introduction"):
         "first_line": content.split("\n")[0],
     }
 
-    return render(request, "boards/docs_single.html", ctx)
+    return render(request, "boards/docs.html", ctx)
+
+
+def about(request):
+    ctx = {
+        "page": "about",
+    }
+
+    return render(request, "about.html", ctx)

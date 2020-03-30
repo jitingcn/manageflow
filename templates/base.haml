@@ -15,10 +15,11 @@
   - compress css
     %link(rel="stylesheet" href="{% static 'bootstrap/bootstrap.scss' %}" type="text/x-scss" )
     %link(rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss")
+    %link(rel="stylesheet" href="{% static 'css/docs.scss' %}" type="text/x-scss")
     -#%link(rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" )
 
 %body(class="page-#{page}")
-  %nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-primary
+  %nav.navbar.navbar-expand-sm.navbar-dark.fixed-top.bg-primary
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
       {% if request.user.is_authenticated %}
         authenticated
@@ -46,8 +47,11 @@
           %li.nav-item
             %a.nav-link(href="#") Link2
       %ul.navbar-nav.ml-auto
+        - if not request.user.is_authenticated
+          %li.nav-item.ml-sm-2
+          %a.nav-link(href="{% url 'mf-index' %}") About
         %li.nav-item.ml-sm-2
-          %a.nav-link(href="{% url 'mf-index' %}") Docs
+          %a.nav-link(href="{% url 'mf-docs' %}") Docs
         - if request.user.is_authenticated
           %li.nav-item.dropdown
             %a.nav-link.dropdown-toggle#navbar_dropdown(
@@ -82,6 +86,9 @@
       .container<
         %span.text-muted<
           Example footer text
+        - if request.user.is_authenticated
+          %span.about
+            %a(href="{% url 'mf-about' %}") about
   - block scripts
     - compress js
       %script(src="{% static 'js/jquery-3.4.1.js' %}")

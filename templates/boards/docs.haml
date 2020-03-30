@@ -1,0 +1,10 @@
+{% extends "boards/base_docs.html" %}
+{% load compress static mf_extras %}
+
+- block title
+  = first_line|striptags
+  \ - {% site_name %}
+- block description
+- block keywords
+- block docs_content
+  %div(class="docs-content docs-{{ section }}")= content|safe

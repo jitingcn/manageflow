@@ -17,11 +17,12 @@
   {% compress css %}
     <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.scss' %}" type="text/x-scss">
     <link rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss">
+    <link rel="stylesheet" href="{% static 'css/docs.scss' %}" type="text/x-scss">
 
   {% endcompress %}
 </head>
 <body class="page-{{ page }}">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+  <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-primary">
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
       {% if request.user.is_authenticated %}
         authenticated
@@ -48,8 +49,12 @@
         {% endif %}
       </ul>
       <ul class="navbar-nav ml-auto">
+        {% if not request.user.is_authenticated %}
+          <li class="nav-item ml-sm-2"></li>
+          <a href="{% url 'mf-index' %}" class="nav-link">About</a>
+        {% endif %}
         <li class="nav-item ml-sm-2">
-          <a href="{% url 'mf-index' %}" class="nav-link">Docs</a>
+          <a href="{% url 'mf-docs' %}" class="nav-link">Docs</a>
         </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item dropdown">
@@ -93,7 +98,12 @@
   {% endblock %}
   {% block footer %}
     <footer class="footer">
-      <div class="container"><span class="text-muted">Example footer text</span></div>
+      <div class="container"><span class="text-muted">Example footer text</span>
+        {% if request.user.is_authenticated %}
+          <span class="about">
+            <a href="{% url 'mf-about' %}">about</a>
+          </span>
+        {% endif %}</div>
     </footer>
   {% endblock %}
   {% block scripts %}
