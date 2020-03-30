@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'django_filters',
     "crispy_forms",
     'manageflow.accounts',
-    'manageflow.home',
+    'manageflow.boards',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

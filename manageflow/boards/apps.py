@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class BoardsConfig(AppConfig):
+class HomeConfig(AppConfig):
     name = 'boards'
