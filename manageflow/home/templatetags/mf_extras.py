@@ -32,7 +32,6 @@ def site_version():
     return settings.VERSION
 
 
-
 @register.simple_tag
 def nav_css_class(page_class):
     if not page_class:

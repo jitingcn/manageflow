@@ -1,6 +1,6 @@
 !!! 5
 - load compress static mf_extras
-%html(lang="en")
+%html
 %head
   %meta(charset="UTF-8" )
   %title<
@@ -9,7 +9,7 @@
     %meta(name="description" content="")
   - block keywords
     %meta(name="keywords" content="")
-    %meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+  %meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
   %meta(name="application-name" content="{% site_name %}" )
   - block head
   - compress css
@@ -19,11 +19,13 @@
 
 %body(class="page-#{page}")
   %nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-primary
-    %a.navbar-brand#base-url(href="{% url 'mf-index' %}" )<
-      - if request.user.is_authenticated
+    <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
+      {% if request.user.is_authenticated %}
         authenticated
-      - else
+      {% else %}
         manageflow
+      {% endif %}
+    </a>
     %button.navbar-toggler(
       type="button"
       data-toggle="collapse"
@@ -35,15 +37,14 @@
       %span.sr-only Toggle navigation
       %span.navbar-toggler-icon
     .collapse.navbar-collapse#navbarSupportedContent
-      - if request.user.is_authenticated
-        %ul.navbar-nav.mr-auto
-          %li.nav-item
-            %a.nav-link(href="#") project
       %ul.navbar-nav.mr-auto
-        %li.nav-item
-          %a.nav-link(href="#") Project
-        %li.nav-item
-          %a.nav-link(href="#") Link
+        - if request.user.is_authenticated
+          %li.nav-item
+            %a.nav-link(href="#") Project
+          %li.nav-item
+            %a.nav-link(href="#") Link1
+          %li.nav-item
+            %a.nav-link(href="#") Link2
       %ul.navbar-nav.ml-auto
         %li.nav-item.ml-sm-2
           %a.nav-link(href="{% url 'mf-index' %}") Docs
@@ -63,25 +64,24 @@
               -# for team in request.profile.team
               .dropdown-divider
               %a.dropdown-item(href="{% url 'mf-index' %}" ) Account Settings
-              %a.dropdown-item(href="{% url 'mf-index' %}" ) Log Out
+              %a.dropdown-item(href="{% url 'logout' %}" ) Log Out
         - elif page != "login"
           %li.nav-item.ml-sm-2
-            %a.nav-link.my-2.my-sm-0(href="{% url 'mf-index' %}" ) Sign In
+            %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" ) Sign In
         - if registration_open
           - if page == "welcome" or page == "login"
             %li.nav-item.ml-sm-2
-              %a.btn.btn-outline-success.my-2.my-sm-0(id="" href="#") Sign Up
+              %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}") Sign Up
   - block containers
     %main.container(role="main" )
       - block content
         .mt-3
-          %h1 Hello World
-
+          %h1 Example Text
   - block footer
     %footer.footer
       .container<
         %span.text-muted<
-          Sticky footer
+          Example footer text
   - block scripts
     - compress js
       %script(src="{% static 'js/jquery-3.4.1.js' %}")
