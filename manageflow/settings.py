@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'manageflow.accounts',
-    'manageflow.home',
+    'manageflow.boards',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

@@ -16,14 +16,14 @@ def index(request):
     #     projects = list(request.profile.projects())
     #
     #     ctx = {"page": "projects", "projects": projects}
-    #     return render(request, "home/projects.html", ctx)
+    #     return render(request, "boards/projects.html", ctx)
 
     ctx = {
         "page": "welcome",
         "registration_open": settings.REGISTRATION_OPEN,
     }
 
-    return render(request, "home/welcome.haml", ctx)
+    return render(request, "boards/welcome.html", ctx)
 
 
 def serve_doc(request, doc="introduction"):
@@ -43,10 +43,10 @@ def serve_doc(request, doc="introduction"):
 
     ctx = {
         "page": "docs",
-        "section": "home",
+        "section": "boards",
         "section": doc,
         "content": content,
         "first_line": content.split("\n")[0],
     }
 
-    return render(request, "home/docs_single.html", ctx)
+    return render(request, "boards/docs_single.html", ctx)

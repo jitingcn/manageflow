@@ -54,7 +54,7 @@
               href="#" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false"
             )
-              Dropdown
+              = user.get_username
             .dropdown-menu(aria-labelledby="navbar_dropdown")
               - if request.user.is_superuser
                 %a.dropdown-item(href="{% url 'admin:index' %}" ) Site Administration
@@ -65,13 +65,13 @@
               .dropdown-divider
               %a.dropdown-item(href="{% url 'mf-index' %}" ) Account Settings
               %a.dropdown-item(href="{% url 'logout' %}" ) Log Out
-        - elif page != "login"
-          %li.nav-item.ml-sm-2
-            %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" ) Sign In
-        - if registration_open
-          - if page == "welcome" or page == "login"
+          - elif page != "login"
             %li.nav-item.ml-sm-2
-              %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}") Sign Up
+              %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" ) Sign In
+          - if registration_open
+            - if page == "welcome" or page == "login"
+              %li.nav-item.ml-sm-2
+                %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}") Sign Up
   - block containers
     %main.container(role="main" )
       - block content

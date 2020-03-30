@@ -54,7 +54,7 @@
         {% if request.user.is_authenticated %}
           <li class="nav-item dropdown">
             <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" id="navbar_dropdown">
-              Dropdown
+              {{ user.get_username }}
             </a>
             <div aria-labelledby="navbar_dropdown" class="dropdown-menu">
               {% if request.user.is_superuser %}
@@ -67,16 +67,16 @@
               <a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>
             </div>
           </li>
-        {% elif page != "login" %}
-          <li class="nav-item ml-sm-2">
-            <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">Sign In</a>
-          </li>
-        {% endif %}
-        {% if registration_open %}
-          {% if page == "welcome" or page == "login" %}
+          {% elif page != "login" %}
             <li class="nav-item ml-sm-2">
-              <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">Sign Up</a>
+              <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">Sign In</a>
             </li>
+          {% if registration_open %}
+            {% if page == "welcome" or page == "login" %}
+              <li class="nav-item ml-sm-2">
+                <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">Sign Up</a>
+              </li>
+            {% endif %}
           {% endif %}
         {% endif %}
       </ul>
