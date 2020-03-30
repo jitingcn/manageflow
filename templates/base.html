@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load compress static mf_extras %}
+<html lang="en"></html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% site_name %} - Manage Your group work flow{% endblock %}</title>
+  {% block description %}
+    <meta name="description" content="">
+  {% endblock %}
+  {% block keywords %}
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {% endblock %}
+  <meta name="application-name" content="{% site_name %}">
+  {% block head %}
+  {% endblock %}
+  {% compress css %}
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.scss' %}" type="text/x-scss">
+    <link rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss">
+
+  {% endcompress %}
+</head>
+<body class="page-{{ page }}">
+  {% debug_warning %}
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">{% if request.user.is_authenticated %}
+        authenticated
+      {% else %}
+        manageflow
+      {% endif %}</a>
+    <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      {% if request.user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link">project</a>
+          </li>
+        </ul>
+      {% endif %}
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link">Project</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Link</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ml-sm-2">
+          <a href="{% url 'mf-index' %}" class="nav-link">Docs</a>
+        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" id="navbar_dropdown">
+              Dropdown
+            </a>
+            <div aria-labelledby="navbar_dropdown" class="dropdown-menu">
+              {% if request.user.is_superuser %}
+                <a href="{% url 'admin:index' %}" class="dropdown-item">Site Administration</a>
+                <div class="dropdown-divider"></div>
+              {% endif %}
+              <div class="dropdown-header">Teams</div>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'mf-index' %}" class="dropdown-item">Account Settings</a>
+              <a href="{% url 'mf-index' %}" class="dropdown-item">Log Out</a>
+            </div>
+          </li>
+        {% elif page != "login" %}
+          <li class="nav-item ml-sm-2">
+            <a href="{% url 'mf-index' %}" class="nav-link my-2 my-sm-0">Sign In</a>
+          </li>
+        {% endif %}
+        {% if registration_open %}
+          {% if page == "welcome" or page == "login" %}
+            <li class="nav-item ml-sm-2">
+              <a href="#" class="btn btn-outline-success my-2 my-sm-0">Sign Up</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  {% block containers %}
+    <main role="main" class="container">
+      {% block content %}
+        <div class="mt-3">
+          <h1>Hello World</h1>
+
+        </div>
+      {% endblock %}
+    </main>
+  {% endblock %}
+  {% block footer %}
+    <footer class="footer">
+      <div class="container"><span class="text-muted">Sticky footer</span></div>
+    </footer>
+  {% endblock %}
+  {% block scripts %}
+    {% compress js %}
+      <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    {% endcompress %}
+  {% endblock %}
+</body>
