@@ -26,11 +26,7 @@ def index(request):
         "registration_open": settings.REGISTRATION_OPEN,
     }
 
-<<<<<<< HEAD:manageflow/boards/views.py
-    return render(request, "boards/welcome.haml", ctx)
-=======
     return render(request, "boards/welcome.html", ctx)
->>>>>>> 89d02adb2b2f0b54e80cf602ce61253646d10516:manageflow/home/views.py
 
 
 def serve_doc(request, doc="introduction"):
@@ -56,9 +52,6 @@ def serve_doc(request, doc="introduction"):
         "first_line": content.split("\n")[0],
     }
 
-<<<<<<< HEAD:manageflow/boards/views.py
-    return render(request, "boards/docs_single.html", ctx)
-=======
     return render(request, "boards/docs.html", ctx)
 
 
@@ -72,4 +65,3 @@ def about(request):
 
 
 
->>>>>>> 89d02adb2b2f0b54e80cf602ce61253646d10516:manageflow/home/views.py
