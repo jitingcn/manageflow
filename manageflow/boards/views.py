@@ -12,6 +12,7 @@ from django.http import (
     HttpResponseForbidden,
     JsonResponse,
 )
+from .forms import BoardForm
 
 
 def index(request):
