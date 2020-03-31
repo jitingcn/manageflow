@@ -25,7 +25,7 @@ class Task(models.Model):
 	#User(s) working on task
 
 	def save(self, *args, **kwargs):
-		self.slug = slugify(self.name)
+		self.slug = slugify(self.text)
 		super(Task, self).save(*args, **kwargs)
 
 	def __str__(self):
