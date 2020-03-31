@@ -1,0 +1,19 @@
+- extends "base.html"
+- load mf_extras
+
+{% block title %}Docs - {% site_name %}{% endblock %}
+
+- block content
+  .row
+    .col-sm-3
+      %ul.docs-nav
+        %li.nav-header Site
+        <li {% if section == "introduction" %} class="active"{% endif %}>
+          <a href="{% url 'mf-docs' %}">Introduction</a>
+        </li>
+        - include "boards/docs_item.html" with slug="example" title="Example article"
+        - include "boards/docs_item.html" with slug="faq" title="Frequently Asked Questions"
+        %li.nav-header Role
+        %li.nav-header Workflow
+    .col-sm-9.mt-3
+      - block docs_content

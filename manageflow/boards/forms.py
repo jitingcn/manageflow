@@ -1,5 +1,5 @@
 from django import forms
-from .models import board
+
 
 #import models here
 

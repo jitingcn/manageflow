@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load compress static mf_extras %}
+{% load i18n compress static mf_extras %}
 <html></html>
 <head>
   <meta charset='UTF-8'>
@@ -15,18 +15,19 @@
   {% block head %}
   {% endblock %}
   {% compress css %}
-    <link rel='stylesheet' href='{% static 'bootstrap/bootstrap.scss' %}' type='text/x-scss'>
-    <link rel='stylesheet' href='{% static 'css/base.scss' %}' type='text/x-scss'>
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.scss' %}" type="text/x-scss">
+    <link rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss">
+    <link rel="stylesheet" href="{% static 'css/docs.scss' %}" type="text/x-scss">
+
   {% endcompress %}
 </head>
-
-<body class='page-{{ page }}'>
-  <nav class='navbar navbar-expand-md navbar-dark fixed-top bg-primary'>
+<body class="page-{{ page }}">
+  <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-primary">
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
       {% if request.user.is_authenticated %}
-        authenticated
+        {% trans "authenticated" %}
       {% else %}
-        manageflow
+        {% site_name %}
       {% endif %}
     </a>
     <button type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbar' aria-expanded='false' aria-label='Toggle navigation' class='navbar-toggler'>
@@ -47,34 +48,38 @@
           </li>
         {% endif %}
       </ul>
-      <ul class='navbar-nav ml-auto'>
-        <li class='nav-item ml-sm-2'>
-          <a href='{% url 'mf-index' %}' class='nav-link'>Docs</a>
+      <ul class="navbar-nav ml-auto">
+        {% if not request.user.is_authenticated %}
+          <li class="nav-item ml-sm-2"></li>
+          <a href="{% url 'mf-about' %}" class="nav-link">{% trans "About" %}</a>
+        {% endif %}
+        <li class="nav-item ml-sm-2">
+          <a href="{% url 'mf-docs' %}" class="nav-link">{% trans "Docs" %}</a>
         </li>
         {% if request.user.is_authenticated %}
-          <li class='nav-item dropdown'>
-            <a href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' class='nav-link dropdown-toggle' id='navbar_dropdown'>
-              Dropdown
+          <li class="nav-item dropdown">
+            <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" id="navbar_dropdown">
+              {{ user.get_username }}
             </a>
-            <div aria-labelledby='navbar_dropdown' class='dropdown-menu'>
+            <div aria-labelledby="navbar_dropdown" class="dropdown-menu dropdown-menu-right">
               {% if request.user.is_superuser %}
-                <a href='{% url 'admin:index' %}' class='dropdown-item'>Site Administration</a>
-                <div class='dropdown-divider'></div>
+                <a href="{% url 'admin:index' %}" class="dropdown-item">{% trans "Site Administration" %}</a>
+                <div class="dropdown-divider"></div>
               {% endif %}
-              <div class='dropdown-header'>Teams</div>
-              <div class='dropdown-divider'></div>
-              <a href='{% url 'mf-index' %}' class='dropdown-item'>Account Settings</a>
-              <a href='{% url 'logout' %}' class='dropdown-item'>Log Out</a>
+              <div class="dropdown-header">Teams</div>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'mf-index' %}" class="dropdown-item">{% trans "Account Settings" %}</a>
+              <a href="{% url 'logout' %}" class="dropdown-item">{% trans "Log Out" %}</a>
             </div>
           </li>
           {% elif page != "login" %}
-            <li class='nav-item ml-sm-2'>
-              <a href='{% url 'login' %}' class='nav-link my-2 my-sm-0'>Sign In</a>
+            <li class="nav-item ml-sm-2">
+              <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">{% trans "Sign In" %}</a>
             </li>
           {% if registration_open %}
             {% if page == "welcome" or page == "login" %}
-              <li class='nav-item ml-sm-2'>
-                <a href='{% url 'signup' %}' class='nav-link btn btn-outline-success my-2 my-sm-0'>Sign Up</a>
+              <li class="nav-item ml-sm-2">
+                <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">{% trans "Sign Up" %}</a>
               </li>
             {% endif %}
           {% endif %}
@@ -92,8 +97,18 @@
     </main>
   {% endblock %}
   {% block footer %}
+<<<<<<< HEAD
     <footer class='footer'>
       <div class='container'><span class='text-muted'>Example footer text</span></div>
+=======
+    <footer class="footer">
+      <div class="container"><span class="text-muted">Example footer text</span>
+        {% if request.user.is_authenticated %}
+          <span class="about">
+            <a href="{% url 'mf-about' %}">{% trans "about" %}</a>
+          </span>
+        {% endif %}</div>
+>>>>>>> 89d02adb2b2f0b54e80cf602ce61253646d10516
     </footer>
   {% endblock %}
   {% block scripts %}
