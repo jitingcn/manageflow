@@ -23,7 +23,7 @@ def index(request):
         "registration_open": settings.REGISTRATION_OPEN,
     }
 
-    return render(request, "home/welcome.haml", ctx)
+    return render(request, "boards/welcome.haml", ctx)
 
 
 def serve_doc(request, doc="introduction"):
@@ -49,4 +49,4 @@ def serve_doc(request, doc="introduction"):
         "first_line": content.split("\n")[0],
     }
 
-    return render(request, "home/docs_single.html", ctx)
+    return render(request, "boards/docs_single.html", ctx)
