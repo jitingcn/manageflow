@@ -63,6 +63,8 @@ def about(request):
 
     return render(request, "about.html", ctx)
 
-
+#def createBoard(request)
+#def createTask(request)
+#def createGroup(request)
 
 
