@@ -1,5 +1,5 @@
 !!! 5
-- load compress static mf_extras
+- load i18n compress static mf_extras
 %html
 %head
   %meta(charset="UTF-8" )
@@ -22,9 +22,9 @@
   %nav.navbar.navbar-expand-sm.navbar-dark.fixed-top.bg-primary
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
       {% if request.user.is_authenticated %}
-        authenticated
+        - trans "authenticated"
       {% else %}
-        manageflow
+        - site_name
       {% endif %}
     </a>
     %button.navbar-toggler(
@@ -49,9 +49,11 @@
       %ul.navbar-nav.ml-auto
         - if not request.user.is_authenticated
           %li.nav-item.ml-sm-2
-          %a.nav-link(href="{% url 'mf-index' %}") About
+          %a.nav-link(href="{% url 'mf-about' %}")<
+            - trans "About"
         %li.nav-item.ml-sm-2
-          %a.nav-link(href="{% url 'mf-docs' %}") Docs
+          %a.nav-link(href="{% url 'mf-docs' %}")<
+            - trans "Docs"
         - if request.user.is_authenticated
           %li.nav-item.dropdown
             %a.nav-link.dropdown-toggle#navbar_dropdown(
@@ -61,21 +63,26 @@
               = user.get_username
             .dropdown-menu.dropdown-menu-right(aria-labelledby="navbar_dropdown")
               - if request.user.is_superuser
-                %a.dropdown-item(href="{% url 'admin:index' %}" ) Site Administration
+                %a.dropdown-item(href="{% url 'admin:index' %}" )<
+                  - trans "Site Administration"
                 %div.dropdown-divider
               .dropdown-header<
                 Teams
               -# for team in request.profile.team
               .dropdown-divider
-              %a.dropdown-item(href="{% url 'mf-index' %}" ) Account Settings
-              %a.dropdown-item(href="{% url 'logout' %}" ) Log Out
+              %a.dropdown-item(href="{% url 'mf-index' %}" )<
+                - trans "Account Settings"
+              %a.dropdown-item(href="{% url 'logout' %}" )<
+                - trans "Log Out"
           - elif page != "login"
             %li.nav-item.ml-sm-2
-              %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" ) Sign In
+              %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" )<
+                -trans "Sign In"
           - if registration_open
             - if page == "welcome" or page == "login"
               %li.nav-item.ml-sm-2
-                %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}") Sign Up
+                %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}")<
+                  - trans "Sign Up"
   - block containers
     %main.container(role="main" )
       - block content
@@ -88,7 +95,8 @@
           Example footer text
         - if request.user.is_authenticated
           %span.about
-            %a(href="{% url 'mf-about' %}") about
+            %a(href="{% url 'mf-about' %}")<
+              - trans "about"
   - block scripts
     - compress js
       %script(src="{% static 'js/jquery-3.4.1.js' %}")

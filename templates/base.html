@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load compress static mf_extras %}
+{% load i18n compress static mf_extras %}
 <html></html>
 <head>
   <meta charset="UTF-8">
@@ -25,9 +25,9 @@
   <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-primary">
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
       {% if request.user.is_authenticated %}
-        authenticated
+        {% trans "authenticated" %}
       {% else %}
-        manageflow
+        {% site_name %}
       {% endif %}
     </a>
     <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
@@ -51,10 +51,10 @@
       <ul class="navbar-nav ml-auto">
         {% if not request.user.is_authenticated %}
           <li class="nav-item ml-sm-2"></li>
-          <a href="{% url 'mf-index' %}" class="nav-link">About</a>
+          <a href="{% url 'mf-about' %}" class="nav-link">{% trans "About" %}</a>
         {% endif %}
         <li class="nav-item ml-sm-2">
-          <a href="{% url 'mf-docs' %}" class="nav-link">Docs</a>
+          <a href="{% url 'mf-docs' %}" class="nav-link">{% trans "Docs" %}</a>
         </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item dropdown">
@@ -63,23 +63,23 @@
             </a>
             <div aria-labelledby="navbar_dropdown" class="dropdown-menu dropdown-menu-right">
               {% if request.user.is_superuser %}
-                <a href="{% url 'admin:index' %}" class="dropdown-item">Site Administration</a>
+                <a href="{% url 'admin:index' %}" class="dropdown-item">{% trans "Site Administration" %}</a>
                 <div class="dropdown-divider"></div>
               {% endif %}
               <div class="dropdown-header">Teams</div>
               <div class="dropdown-divider"></div>
-              <a href="{% url 'mf-index' %}" class="dropdown-item">Account Settings</a>
-              <a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>
+              <a href="{% url 'mf-index' %}" class="dropdown-item">{% trans "Account Settings" %}</a>
+              <a href="{% url 'logout' %}" class="dropdown-item">{% trans "Log Out" %}</a>
             </div>
           </li>
           {% elif page != "login" %}
             <li class="nav-item ml-sm-2">
-              <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">Sign In</a>
+              <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">{% trans "Sign In" %}</a>
             </li>
           {% if registration_open %}
             {% if page == "welcome" or page == "login" %}
               <li class="nav-item ml-sm-2">
-                <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">Sign Up</a>
+                <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">{% trans "Sign Up" %}</a>
               </li>
             {% endif %}
           {% endif %}
@@ -101,7 +101,7 @@
       <div class="container"><span class="text-muted">Example footer text</span>
         {% if request.user.is_authenticated %}
           <span class="about">
-            <a href="{% url 'mf-about' %}">about</a>
+            <a href="{% url 'mf-about' %}">{% trans "about" %}</a>
           </span>
         {% endif %}</div>
     </footer>
