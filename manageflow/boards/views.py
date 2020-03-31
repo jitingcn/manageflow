@@ -1,7 +1,10 @@
 import os
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, redirect, render
 from django.conf import settings
+from django.urls import reverse
 from django.http import (
     Http404,
     HttpResponse,
@@ -58,3 +61,7 @@ def about(request):
     }
 
     return render(request, "about.html", ctx)
+
+
+
+
