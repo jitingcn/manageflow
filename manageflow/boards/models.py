@@ -1,12 +1,13 @@
 import uuid
 from django.db import models
 from manageflow.accounts.models import User
+from django.contrib.auth.models import Group
 from django.template.defaultfilters import slugify
 
 class Board(models.Model):
 	board_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Board")
-	#group = models.
+	group = models.ForeignKey(Group, on_delete=models.CASCADE)
 	name = models.CharField(max_length=200)
 	description = models.TextField()
 
@@ -22,7 +23,8 @@ class Task(models.Model):
 	board = models.ForeignKey(Board, on_delete=models.CASCADE)
 	text = models.CharField(max_length=300)
 	complete = models.BooleanField()
-	#User(s) working on task
+	assigned_to = models.ForeignKey(User, blank=True, null=True,
+									related_name="task_assigned_to", on_delete=models.CASCADE)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.text)
@@ -31,6 +33,5 @@ class Task(models.Model):
 	def __str__(self):
 		return self.text
 
-#Groups
 
 
