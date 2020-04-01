@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n compress static mf_extras widget_tweaks %}
+
+{% block title %}{% trans "Login" %} - {% site_name %}{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss">
+
+{% endblock %}
+{% block content %}
+  <form method="post" action="{% url 'login' %}" class="form-float mt-3" id="login_form">
+    {% csrf_token %}
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-3 font-weight-normal">{% trans "Login" %}</h1>
+      <p>
+        {% url 'signup' as signup %}
+        {% blocktrans %}
+          If you have not created an account yet, then please <a href="{{ signup }}">sign up</a> first.
+        {% endblocktrans %}
+      </p>
+    </div>
+    {% for item in form %}
+      <div class="form-label-group">
+        {% if item.name == "remember" %}
+          {% render_field item %}
+        {% else %}
+          {% render_field item class+="form-control" %}
+        {% endif %}
+        <label for="id_{{ item.name }}">{{ item.label }}</label>
+      </div>
+    {% endfor %}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+    {% endif %}
+    <a href="{% url 'account_reset_password' %}" class="text-secondary button">
+      {% trans "Forgot Password?" %}
+    </a>
+    <button type="submit" class="btn btn-sm btn-primary btn-block">
+      {% trans "Login" %}
+    </button>
+  </form>
+{% endblock %}

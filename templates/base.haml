@@ -17,6 +17,7 @@
     %link(rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss")
     %link(rel="stylesheet" href="{% static 'css/docs.scss' %}" type="text/x-scss")
     -#%link(rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" )
+    - block extra_css
 
 %body(class="page-#{page}")
   %nav.navbar.navbar-expand-sm.navbar-dark.fixed-top.bg-primary
@@ -77,12 +78,12 @@
           - elif page != "login"
             %li.nav-item.ml-sm-2
               %a.nav-link.my-2.my-sm-0(href="{% url 'login' %}" )<
-                -trans "Sign In"
+                -trans "Login"
+        - else
           - if registration_open
-            - if page == "welcome" or page == "login"
-              %li.nav-item.ml-sm-2
-                %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(id="" href="{% url 'signup' %}")<
-                  - trans "Sign Up"
+            %li.nav-item.ml-sm-2
+              %a.nav-link.btn.btn-outline-success.my-2.my-sm-0(href="{% url 'signup' %}")<
+                - trans "Sign Up"
   - block containers
     %main.container(role="main" )
       - block content
@@ -96,7 +97,7 @@
         - if request.user.is_authenticated
           %span.about
             %a(href="{% url 'mf-about' %}")<
-              - trans "about"
+              - trans "About"
   - block scripts
     - compress js
       %script(src="{% static 'js/jquery-3.4.1.js' %}")

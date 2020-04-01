@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.scss' %}" type="text/x-scss">
     <link rel="stylesheet" href="{% static 'css/base.scss' %}" type="text/x-scss">
     <link rel="stylesheet" href="{% static 'css/docs.scss' %}" type="text/x-scss">
+    {% block extra_css %}
+
+    {% endblock %}
 
   {% endcompress %}
 </head>
@@ -74,14 +77,13 @@
           </li>
           {% elif page != "login" %}
             <li class="nav-item ml-sm-2">
-              <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">{% trans "Sign In" %}</a>
+              <a href="{% url 'login' %}" class="nav-link my-2 my-sm-0">{% trans "Login" %}</a>
             </li>
+        {% else %}
           {% if registration_open %}
-            {% if page == "welcome" or page == "login" %}
-              <li class="nav-item ml-sm-2">
-                <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">{% trans "Sign Up" %}</a>
-              </li>
-            {% endif %}
+            <li class="nav-item ml-sm-2">
+              <a href="{% url 'signup' %}" class="nav-link btn btn-outline-success my-2 my-sm-0">{% trans "Sign Up" %}</a>
+            </li>
           {% endif %}
         {% endif %}
       </ul>
@@ -101,7 +103,7 @@
       <div class="container"><span class="text-muted">Example footer text</span>
         {% if request.user.is_authenticated %}
           <span class="about">
-            <a href="{% url 'mf-about' %}">{% trans "about" %}</a>
+            <a href="{% url 'mf-about' %}">{% trans "About" %}</a>
           </span>
         {% endif %}</div>
     </footer>

@@ -1,0 +1,24 @@
+- extends "base.html"
+- load i18n compress static mf_extras widget_tweaks
+
+{% block title %}{% trans "Signup" %} - {% site_name %}{% endblock %}
+
+- block extra_css
+  %link(rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss")
+
+- block content
+  %form.form-float.mt-3#signup_form(method="post" action="{% url 'signup' %}")
+    - csrf_token
+    .text-center.mb-4
+      %h1.h3.mb-3.font-weight-normal<
+        - trans "Sign Up"
+      %p
+        - blocktrans
+          Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
+    - for item in form
+      .form-label-group
+        - render_field item class+="form-control"
+        %label(for="id_#{item.name}")<
+          = item.label
+    %button.btn.btn-sm.btn-primary.btn-block(type="submit")
+      {% trans "Sign Up" %} &raquo;

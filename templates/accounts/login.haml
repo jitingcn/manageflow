@@ -1,0 +1,32 @@
+- extends "base.html"
+- load i18n compress static mf_extras widget_tweaks
+
+{% block title %}{% trans "Login" %} - {% site_name %}{% endblock %}
+
+- block extra_css
+  %link(rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss")
+
+- block content
+  %form.form-float.mt-3#login_form(method="post" action="{% url 'login' %}")
+    - csrf_token
+    .text-center.mb-4
+      %h1.h3.mb-3.font-weight-normal<
+        - trans "Login"
+      %p
+        - url 'signup' as signup
+        - blocktrans
+          If you have not created an account yet, then please <a href="{{ signup }}">sign up</a> first.
+    - for item in form
+      .form-label-group
+        - if item.name == "remember"
+          - render_field item
+        - else
+          - render_field item class+="form-control"
+        %label(for="id_#{item.name}")<
+          = item.label
+    - if redirect_field_value
+      %input(type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}")
+    %a.text-secondary.button(href="{% url 'account_reset_password' %}" )
+      - trans "Forgot Password?"
+    %button.btn.btn-sm.btn-primary.btn-block(type="submit")
+      - trans "Login"

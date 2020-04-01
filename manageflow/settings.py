@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.google',
     'compressor',
+    'widget_tweaks',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -238,6 +239,14 @@ COMPRESS_CSS_HASHING_METHOD = "content"
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+ACCOUNT_FORMS = {
+    'signup': 'manageflow.accounts.forms.CustomSignupForm',
+}
+ACCOUNT_SIGNUP_FORM_CLASS = None
 
 # Email integration
 EMAIL_HOST = os.getenv("EMAIL_HOST", "")

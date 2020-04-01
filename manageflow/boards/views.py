@@ -22,7 +22,6 @@ def index(request):
         "page": "welcome",
         "registration_open": settings.REGISTRATION_OPEN,
     }
-
     return render(request, "boards/welcome.html", ctx)
 
 
@@ -47,6 +46,7 @@ def serve_doc(request, doc="introduction"):
         "section": doc,
         "content": content,
         "first_line": content.split("\n")[0],
+        "registration_open": settings.REGISTRATION_OPEN,
     }
 
     return render(request, "boards/docs.html", ctx)
@@ -55,6 +55,7 @@ def serve_doc(request, doc="introduction"):
 def about(request):
     ctx = {
         "page": "about",
+        "registration_open": settings.REGISTRATION_OPEN,
     }
 
     return render(request, "about.html", ctx)
