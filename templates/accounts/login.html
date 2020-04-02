@@ -15,7 +15,9 @@
       {% if form.non_field_errors %}
         <p class="text-danger">{{ form.non_field_errors|join:"" }}</p>
       {% elif form.errors %}
-        <p class="text-danger">Incorrect email or password.</p>
+        <p class="text-danger">
+          {% trans "Incorrect email or password." %}
+        </p>
       {% endif %}
       <p>
         {% url 'signup' as signup %}

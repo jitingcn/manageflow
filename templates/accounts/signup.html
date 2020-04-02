@@ -14,7 +14,7 @@
       <h1 class="h3 mb-3 font-weight-normal">{% trans "Sign Up" %}</h1>
       <p>
         {% blocktrans %}
-          Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
+          Already have an account? Then please <a href="{{ login }}">sign in</a>.
         {% endblocktrans %}
       </p>
     </div>
@@ -23,6 +23,7 @@
         {% render_field item class+="form-control" %}
         <label for="id_{{ item.name }}">{{ item.label }}</label>
       </div>
+      <div class="text-danger">{{ item.errors }}</div>
     {% endfor %}
     <button type="submit" class="btn btn-sm btn-primary btn-block">
       {% trans "Sign Up" %} &raquo;

@@ -15,7 +15,8 @@
       - if form.non_field_errors
         <p class="text-danger">{{ form.non_field_errors|join:"" }}</p>
       - elif form.errors
-        %p.text-danger Incorrect email or password.
+        %p.text-danger
+          - trans "Incorrect email or password."
       %p
         - url 'signup' as signup
         - blocktrans

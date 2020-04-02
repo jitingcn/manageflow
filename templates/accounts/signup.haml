@@ -14,11 +14,13 @@
         - trans "Sign Up"
       %p
         - blocktrans
-          Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
+          Already have an account? Then please <a href="{{ login }}">sign in</a>.
     - for item in form
       .form-label-group
         - render_field item class+="form-control"
         %label(for="id_#{item.name}")<
           = item.label
+      .text-danger<
+        = item.errors
     %button.btn.btn-sm.btn-primary.btn-block(type="submit")
       {% trans "Sign Up" %} &raquo;

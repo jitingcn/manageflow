@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 22:03+0000\n"
+"POT-Creation-Date: 2020-04-02 14:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,15 @@ msgid "Nickname (optional)"
 msgstr "昵称（可选）"
 
 #: templates/accounts/login.html:4 templates/accounts/login.html:14
-#: templates/accounts/login.html:39 templates/base.html:80
+#: templates/accounts/login.html:46 templates/base.html:80
 msgid "Login"
 msgstr "登录"
 
-#: templates/accounts/login.html:17
+#: templates/accounts/login.html:19
+msgid "Incorrect email or password."
+msgstr "密码或用户名（邮箱）错误。"
+
+#: templates/accounts/login.html:24
 #, python-format
 msgid ""
 "\n"
@@ -42,19 +46,20 @@ msgid ""
 "\"%(signup)s\">sign up</a> first.\n"
 "        "
 msgstr ""
+"\n"
+"          如果你还没创建帐号，请先点此 <a href=\"%(signup)s\">注册</a> 吧。\n"
+"        "
 
-#: templates/accounts/login.html:36
+#: templates/accounts/login.html:43
 msgid "Forgot Password?"
 msgstr "忘记密码？"
 
 #: templates/accounts/signup.html:4
-#, fuzzy
-#| msgid "Sign Up"
 msgid "Signup"
 msgstr "注册"
 
-#: templates/accounts/signup.html:14 templates/accounts/signup.html:28
-#: templates/base.html:86
+#: templates/accounts/signup.html:14 templates/accounts/signup.html:29
+#: templates/base.html:85
 msgid "Sign Up"
 msgstr "注册"
 
@@ -62,16 +67,19 @@ msgstr "注册"
 #, python-format
 msgid ""
 "\n"
-"          Already have an account? Then please <a href=\"%(login_url)s"
-"\">sign in</a>.\n"
+"          Already have an account? Then please <a href=\"%(login)s\">sign "
+"in</a>.\n"
 "        "
 msgstr ""
+"\n"
+"          已经有一个帐号了？请点此 <a href=\"%(login)s\">登录</a>。\n"
+"        "
 
 #: templates/base.html:31
 msgid "authenticated"
 msgstr "已登录"
 
-#: templates/base.html:57 templates/base.html:108
+#: templates/base.html:57 templates/base.html:106
 msgid "About"
 msgstr "关于"
 
