@@ -3,16 +3,17 @@
 
 {% block title %}Docs - {% site_name %}{% endblock %}
 
-{% block content %}
+{% block main %}
+<div class="container">
   <div class="row">
     <div class="col-sm-3">
       <ul class="docs-nav">
         <li class="nav-header">Site</li>
         <li {% if section == "introduction" %} class="active"{% endif %}>
-          <a href="{% url 'mf-docs' %}">Introduction</a>
+          <a href="{% url 'mf-docs' %}">Intro</a>
         </li>
-        {% include "boards/docs_item.html" with slug="example" title="Example article" %}
-        {% include "boards/docs_item.html" with slug="faq" title="Frequently Asked Questions" %}
+        {% include "boards/docs_item.html" with slug="example" title="Examples" %}
+        {% include "boards/docs_item.html" with slug="faq" title="FAQs" %}
         <li class="nav-header">Role</li>
         <li class="nav-header">Workflow</li>
       </ul>
@@ -22,4 +23,5 @@
       {% endblock %}
     </div>
   </div>
+</div>
 {% endblock %}

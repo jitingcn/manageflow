@@ -1,31 +1,28 @@
 {% extends "base.html" %}
 {% load i18n compress static mf_extras widget_tweaks %}
-
 {% block title %}{% trans "Signup" %} - {% site_name %}{% endblock %}
 
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss">
-
-{% endblock %}
 {% block content %}
-  <form method="post" action="{% url 'signup' %}" class="form-float mt-3" id="signup_form">
-    {% csrf_token %}
-    <div class="text-center mb-4">
-      <h1 class="h3 mb-3 font-weight-normal">{% trans "Sign Up" %}</h1>
+<div class="signup-form">
+  <form method="post" action="{% url 'signup' %}">{% csrf_token %}
+    <div class="text-center">
+      <h2>{% trans "Sign Up" %}</h2>
       <p>
+        {% url 'login' as login %}
         {% blocktrans %}
-          Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
+          Have an account? please <a href="{{ login }}">sign in</a>
         {% endblocktrans %}
       </p>
     </div>
     {% for item in form %}
-      <div class="form-label-group">
-        {% render_field item class+="form-control" %}
+      <div class="form-group">
         <label for="id_{{ item.name }}">{{ item.label }}</label>
+        {% render_field item class+="form-control" %}
       </div>
     {% endfor %}
-    <button type="submit" class="btn btn-sm btn-primary btn-block">
+    <button type="submit" class="btn btn-success btn-block">
       {% trans "Sign Up" %} &raquo;
     </button>
   </form>
+</div>
 {% endblock %}

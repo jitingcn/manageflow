@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% load compress mf_extras static %}
-
-{% block content %}
-  <h1>welcome to this site</h1>
+{% block title %}ManageFlow::Homepage{% endblock %}
+{% block main %}
+<main>
+  <div class="container">
+      <div class="jumbotron">
+          <h1>ManageFlow</h1>
+          <p class="lead">Make managing Simple</p>
+          <p><a href="{% url 'signup' %}" target="_blank" class="btn btn-success btn-lg">Get started today</a></p>
+      </div>
+      <div class="row">
+          <div class="col-md-4">
+              <h2>About</h2>
+              <p>Create By:<br>Jiting<br>RogueTea<br>M-Anas-Syed<br>liantianfeng</p>
+              <p><a href="{% url 'mf-about' %}" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+              <h2>Docs</h2>
+              <p>Intro<br>Examples<br>FAQs<br>Role<br>Workflow</p>
+              <p><a href="{% url 'mf-docs' %}" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+              <h2>FAQ</h2>
+              <p>what<br>when<br>how<br>where<br>who</p>
+              <p><a href="{% url 'mf-docs' %}" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+          </div>
+      </div>
+  </div>
+</main>
 {% endblock %}

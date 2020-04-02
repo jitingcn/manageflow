@@ -1,26 +1,17 @@
 {% extends "base.html" %}
 {% load i18n compress static mf_extras widget_tweaks %}
-
 {% block title %}{% trans "Login" %} - {% site_name %}{% endblock %}
 
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss">
-
-{% endblock %}
 {% block content %}
+<div class="login-form">
   <form method="post" action="{% url 'login' %}" class="form-float mt-3" id="login_form">
     {% csrf_token %}
     <div class="text-center mb-4">
       <h1 class="h3 mb-3 font-weight-normal">{% trans "Login" %}</h1>
-      {% if form.non_field_errors %}
-        <p class="text-danger">{{ form.non_field_errors|join:"" }}</p>
-      {% elif form.errors %}
-        <p class="text-danger">Incorrect email or password.</p>
-      {% endif %}
       <p>
         {% url 'signup' as signup %}
         {% blocktrans %}
-          If you have not created an account yet, then please <a href="{{ signup }}">sign up</a> first.
+          Not a user? please <a href="{{ signup }}">sign up</a>
         {% endblocktrans %}
       </p>
     </div>
@@ -28,20 +19,23 @@
       <div class="form-label-group">
         {% if item.name == "remember" %}
           {% render_field item %}
+          <label for="id_{{ item.name }}">{{ item.label }}</label>
         {% else %}
           {% render_field item class+="form-control" %}
+          <label for="id_{{ item.name }}"></label>
         {% endif %}
-        <label for="id_{{ item.name }}">{{ item.label }}</label>
+        
       </div>
     {% endfor %}
     {% if redirect_field_value %}
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
     {% endif %}
-    <a href="{% url 'account_reset_password' %}" class="text-secondary button">
+    <a href="{% url 'account_reset_password' %}" class="text-secondary button float-right">
       {% trans "Forgot Password?" %}
     </a>
-    <button type="submit" class="btn btn-sm btn-primary btn-block">
+    <button type="submit" class="btn btn-success btn-block">
       {% trans "Login" %}
     </button>
   </form>
+</div>
 {% endblock %}
