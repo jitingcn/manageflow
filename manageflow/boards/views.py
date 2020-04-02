@@ -75,13 +75,13 @@ def createBoard(request):
     form = CreateNewBoard()
 
     if request.method == "POST":
-        form= CreateNewBoard(request.POST)
+        form = CreateNewBoard(request.POST)
 
         if form.is_valid():
             temp= form.save(commit=False)
             temp.admin =request.user
             temp.save()
-            return redirect('/%i' %temp.id)
+            return redirect('/dashboard/')
 
     return render(request, 'createBoard.html', {'form':form})
 
