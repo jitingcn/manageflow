@@ -81,9 +81,23 @@ def createBoard(request):
             temp= form.save(commit=False)
             temp.admin =request.user
             temp.save()
-            return redirect('/dashboard/')
+            return redirect('/%i' %temp.id)
 
-    return render(request, 'create.html', {'form':form})
+    return render(request, 'createBoard.html', {'form':form})
+
+@login_required
+def createTask(request):
+    form = CreateNewTask()
+
+    if form.is_valid():
+        temp = form.save(commit=False)
+        temp.admin = request.user
+        temp.save()
+        return redirect('/dashboard/')
+
+    return render(request, 'createTask.html', {'form': form})
+
+    pass
 
 
 
