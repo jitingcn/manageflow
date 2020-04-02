@@ -7,7 +7,6 @@ from django.template.defaultfilters import slugify
 class Board(models.Model):
 	board_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Board")
-	group = models.ForeignKey(Group, on_delete=models.CASCADE)
 	name = models.CharField(max_length=200)
 	description = models.TextField()
 
@@ -23,8 +22,8 @@ class Task(models.Model):
 	board = models.ForeignKey(Board, on_delete=models.CASCADE)
 	text = models.CharField(max_length=300)
 	complete = models.BooleanField()
-	assigned_to = models.ForeignKey(User, blank=True, null=True,
-									related_name="task_assigned_to", on_delete=models.CASCADE)
+	assigned_to = models.CharField(max_length=30)
+
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.text)

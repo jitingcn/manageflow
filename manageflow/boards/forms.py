@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.contrib.auth.models import Group
 from .models import Board, Task
 
 #import models here
@@ -14,4 +15,4 @@ class TaskForm(ModelForm):
 
     class Meta:
         model = Task
-        fields = ('board', 'text', 'complete')
+        fields = ('board', 'text', 'complete', 'assigned_to')

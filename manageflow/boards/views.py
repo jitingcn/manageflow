@@ -13,6 +13,7 @@ from django.http import (
     JsonResponse,
 )
 from .forms import BoardForm
+from .models import Board, Task
 
 
 def index(request):
@@ -63,7 +64,6 @@ def about(request):
 
     return render(request, "about.html", ctx)
 
-#def createBoard(request)
 #def createTask(request)
 #def createGroup(request)
 
