@@ -12,6 +12,11 @@
     {% csrf_token %}
     <div class="text-center mb-4">
       <h1 class="h3 mb-3 font-weight-normal">{% trans "Login" %}</h1>
+      {% if form.non_field_errors %}
+        <p class="text-danger">{{ form.non_field_errors|join:"" }}</p>
+      {% elif form.errors %}
+        <p class="text-danger">Incorrect email or password.</p>
+      {% endif %}
       <p>
         {% url 'signup' as signup %}
         {% blocktrans %}
