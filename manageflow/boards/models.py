@@ -8,7 +8,6 @@ class Board(models.Model):
 	board_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Board")
 	name = models.CharField(max_length=200)
-	description = models.TextField()
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name)

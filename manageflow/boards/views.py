@@ -2,6 +2,7 @@ import os
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.conf import settings
 from django.urls import reverse
@@ -11,8 +12,8 @@ from django.http import (
     HttpResponseBadRequest,
     HttpResponseForbidden,
     JsonResponse,
-)
-from .forms import BoardForm
+    HttpResponseRedirect)
+from .forms import CreateNewBoard
 from .models import Board, Task
 
 
@@ -64,7 +65,25 @@ def about(request):
 
     return render(request, "about.html", ctx)
 
-#def createTask(request)
-#def createGroup(request)
+@login_required
+def dashboard(request):
+    username = request.user.get_username()
+    return HttpResponse("howdy " + username)
+
+@login_required
+def createBoard(request):
+    form = CreateNewBoard()
+
+    if request.method == "POST":
+        form= CreateNewBoard(request.POST)
+
+        if form.is_valid():
+            temp= form.save(commit=False)
+            temp.admin =request.user
+            temp.save()
+            return redirect('/dashboard/')
+
+    return render(request, 'create.html', {'form':form})
+
 
 

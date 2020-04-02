@@ -1,18 +1,24 @@
-{% extends 'base.html' %}
-{% block title %}
-Create New List
-{% endblock %}
+<html>
+<head>
+ <title>Board</title>
+ </head>
 
-{% block content %}
-	<h3>Create a New To Do List</h3>
-	<br>
-	<form method="post" action="/create/" class="form-group">
-		{% csrf_token %}
-		<div class="input-group mb-3">
-	  		<div class="input-group-prepend">
-	  		<button name="save" type="submit" class="btn btn-success">Create</button>
-	  		</div>
-	  		{{form.name}}
-		</div>
-	</form>
-{% endblock %}
+ <body>
+<h1>Add a Board</h1>
+ <div>
+ <form id="create" method="post" action="/create/">
+ {% csrf_token %}
+ {% for hidden in form.hidden_fields %}
+ {{ hidden }}
+{% endfor %}
+ {% for field in form.visible_fields %}
+ {{ field.errors }}
+ {{ field.help_text }}
+ {{ field }}
+ {% endfor %}
+ <input type="submit" name="submit" value="Create a Board" />
+ </form>
+
+ </div>
+ </body>
+</html>
