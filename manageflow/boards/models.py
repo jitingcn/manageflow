@@ -9,9 +9,14 @@ from manageflow.accounts.models import User
 
 
 class Board(models.Model):
-    board_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Board")
     name = models.CharField(max_length=200)
+
+    class meta:
+        ordering =('name',)
+        verbose_name = "board"
+        verbose_name_plural = "Boards"
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

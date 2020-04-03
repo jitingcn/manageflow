@@ -12,7 +12,7 @@ from django.http import (
     HttpResponseForbidden,
     JsonResponse,
     HttpResponseRedirect)
-from .forms import CreateNewBoard, CreateNewTask
+from .forms import CreateNewBoard
 from .models import Board, Task
 
 
@@ -65,49 +65,9 @@ def about(request):
 
     return render(request, "about.html", ctx)
 
-@login_required
-def dashboard(request):
-    username = request.user.get_username()
-    return HttpResponse("howdy " + username)
 
 @login_required
-def createBoard(request):
-    form = CreateNewBoard()
-
-    if request.method == "POST":
-        form = CreateNewBoard(request.POST)
-
-        if form.is_valid():
-            temp= form.save(commit=False)
-            temp.admin =request.user
-            temp.save()
-            #request.user.board.add(temp) # adds the board to the current logged in user
-            return redirect('/dashboard/')git
-
-    return render(request, 'createBoard.html', {'form':form})
-
-@login_required
-def createTask(request):
-    form = CreateNewTask()
-
-    if form.is_valid():
-        temp = form.save(commit=False)
-        temp.admin = request.user
-        temp.save()
-        return redirect('/dashboard/')
-
-    return render(request, 'createTask.html', {'form': form})
-
-    pass
-
-@login_required
-def dashboard(request):
-    username = request.user.get_username()
-    return HttpResponse("howdy " + username)
-
-
-@login_required
-def create_board(request):
+def create_Board(request):
     form = CreateNewBoard()
 
     if request.method == "POST":
@@ -121,15 +81,9 @@ def create_board(request):
 
     return render(request, 'boards/create_board.html', {'form': form})
 
-
 @login_required
-def create_task(request):
-    form = CreateNewTask()
+def dashboard(request):
+    boards = Board.objects.filter(admin=request.user)
+    return HttpResponse(boards)
 
-    if form.is_valid():
-        temp = form.save(commit=False)
-        temp.admin = request.user
-        temp.save()
-        return redirect('/dashboard/')
 
-    return render(request, 'create_task.html', {'form': form})
