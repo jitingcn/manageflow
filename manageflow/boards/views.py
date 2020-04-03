@@ -81,7 +81,8 @@ def createBoard(request):
             temp= form.save(commit=False)
             temp.admin =request.user
             temp.save()
-            return redirect('/dashboard/')
+            #request.user.board.add(temp) # adds the board to the current logged in user
+            return redirect('/dashboard/')git
 
     return render(request, 'createBoard.html', {'form':form})
 
