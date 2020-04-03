@@ -21,6 +21,6 @@ from manageflow.accounts import views as account_view
 urlpatterns = [
     path("admin/login/", account_view.mf_login),
     path('admin/', admin.site.urls),
-    path("", include("manageflow.accounts.urls")),
     path("", include("manageflow.boards.urls")),
+    path("", include("manageflow.accounts.urls")),
 ]
