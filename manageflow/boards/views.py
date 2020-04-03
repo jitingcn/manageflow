@@ -12,7 +12,7 @@ from django.http import (
     HttpResponseForbidden,
     JsonResponse,
     HttpResponseRedirect)
-from .forms import CreateNewBoard
+from .forms import CreateNewBoard, CreateNewTask
 from .models import Board, Task
 
 
@@ -75,7 +75,6 @@ def create_Board(request):
 
         if form.is_valid():
             temp = form.save(commit=False)
-            temp.admin = request.user
             temp.save()
             return redirect('/dashboard/')
 
@@ -86,4 +85,19 @@ def dashboard(request):
     boards = Board.objects.filter(admin=request.user)
     return HttpResponse(boards)
 
+
+@login_required
+def createTask(request):
+    form = CreateNewTask()
+
+    if request.method == "POST":
+        form = CreateNewTask(request.POST)
+
+        if form.is_valid():
+            temp = form.save(commit=False)
+            temp.board = Board.objects.get(id=id)
+            temp.save()
+            return redirect("/dashboard")
+
+    return HttpResponse("WIP")
 
