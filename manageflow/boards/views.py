@@ -17,11 +17,11 @@ from .models import Board, Task
 
 
 def index(request):
-    # if request.user.is_authenticated:
-    #     projects = list(request.profile.projects())
-    #
-    #     ctx = {"page": "projects", "projects": projects}
-    #     return render(request, "boards/projects.html", ctx)
+    if request.user.is_authenticated:
+        # projects = list(request.profile.projects())
+        #
+        # ctx = {"page": "projects", "projects": projects}
+        return redirect(f"/{request.user.get_username()}/")
 
     ctx = {
         "page": "welcome",
@@ -88,16 +88,12 @@ def dashboard(request):
 
 @login_required
 def createTask(request):
-    form = CreateNewTask()
-
     if request.method == "POST":
         form = CreateNewTask(request.POST)
 
         if form.is_valid():
-            temp = form.save(commit=False)
-            temp.board = Board.objects.get(id=id)
-            temp.save()
-            return redirect("/dashboard")
-
-    return HttpResponse("WIP")
+            pass
+    else:
+        form = CreateNewTask()
+    return render(request, 'boards/task.html', {'form': form})
 

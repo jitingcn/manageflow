@@ -7,7 +7,6 @@ from django.template.defaultfilters import slugify
 
 from manageflow.accounts.models import User
 
-
 class Board(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Board")
@@ -27,7 +26,7 @@ class Board(models.Model):
 
 
 class Task(models.Model):
-    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    #board = models.ForeignKey(Board, on_delete=models.CASCADE)
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=300)
     complete = models.BooleanField()

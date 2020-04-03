@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n compress static mf_extras widget_tweaks %}
+
+{% block title %}{% trans "Sign Out" %} - {% site_name %}{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss">
+
+{% endblock %}
+{% block content %}
+  <form method="post" action="{% url 'logout' %}" class="form-float mt-3">
+    <h1 class="h3 mb-3 font-weight-normal">{% trans "Sign Out" %}</h1>
+    <p>{% trans 'Are you sure you want to sign out?' %}</p>
+    {% csrf_token %}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <button type="submit" class="btn btn-sm btn-primary btn-block">
+      {% trans 'Sign Out' %}
+    </button>
+  </form>
+{% endblock %}

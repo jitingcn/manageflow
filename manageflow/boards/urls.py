@@ -8,8 +8,6 @@ urlpatterns = [
     path("docs/", views.serve_doc, name="mf-docs"),
     path("docs/<slug:doc>/", views.serve_doc, name="mf-serve-doc"),
     path("about/", views.about, name="mf-about"),
-    path("dashboard/", views.dashboard, name="dashboard"),
-    path("create/", views.create_Board, name="create"),
-    path("createTask/", views.createTask, name="createTask"),
-
+    path("create", views.create_Board, name="new-Board"),
+    path("Task", views.createTask, name="create-Task"),
 ]
