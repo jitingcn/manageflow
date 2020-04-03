@@ -1,0 +1,18 @@
+- extends "base.html"
+- load i18n compress static mf_extras
+
+{% block title %}Board - {% site_name %}{% endblock %}
+
+- block content
+  .mt-3
+    %h1 Add a Board
+    %form(id="create" method="post" action="/create/")
+      - csrf_token
+      - for hidden in form.hidden_fields
+        = hidden
+      - for field in form.visible_fields
+        = field.errors
+        = field.help_text
+        = field
+      %button.btn.btn-sm.btn-primary.btn-block(type="submit")
+        - trans "Create a Board"

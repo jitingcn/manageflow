@@ -6,7 +6,12 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.template.defaultfilters import slugify
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from django.db.models import Count, Q
 
 
 class UserManager(BaseUserManager):
@@ -62,17 +67,78 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.username}"
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
+class ProfileManager(models.Manager):
+    @staticmethod
+    def for_user(self, user):
+        try:
+            return user.profile
+        except UserProfile.DoesNotExist:
+            profile = UserProfile(user=user)
+            profile.save()
+            return profile
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, models.CASCADE, blank=True, null=True)
+    bio = models.CharField(max_length=200, blank=True)
+    avatar = models.ImageField()
+    url = models.URLField()
+
+    object = ProfileManager()
+
+    def __str__(self):
+        return f"Profile for {self.user.username}"
+
+    def send_change_email_link(self):  # TODO
+        pass
+
+    def project(self):
+        is_owner = Q(owner=self.user)
+        is_member = Q(mamber_user=self.user)
+        q = Project.objects.filter(is_owner | is_member)
+        return q.distinct().order_by("name")
+
+    def annotated_projects(self):
+        project_ids = self.projects().values("id")
+
+        q = Project.objects.filter(id_in=project_ids)
+        n_down = Count("check", filter=Q(check_status="done"))
+        q = q.annotate(n_down=n_down)
+        return q.order_by("name")
+
+    # @receiver(post_save, sender=User)
+    # def create_user_profile(self, instance, created, **kwargs):
+    #     if created:
+    #         UserProfile.objects.create(user=instance)
+    #
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(self, instance, **kwargs):
+    #     instance.profile.save()
+
+
+class Project(models.Model):
+    code = models.UUIDField(default=uuid.uuid4, unique=True)
+    name = models.CharField(max_length=200, blank=True)
+    owner = models.ForeignKey(User, models.CASCADE)
+
+    def __str__(self):
+        return self.name or self.owner.email
+
+    @property
+    def owner_profile(self):
+        return UserProfile.objects.for_user(self.owner)
+
+    def team(self):
+        return User.objects.filter(memberships_project=self).order_by("username")
+
+    def invite(self, user):
+        Member.objects.create(user=user, project=self)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Project, self).save(*args, **kwargs)
+
+
+class Member(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, related_name="memberships")
+    project = models.ForeignKey(Project, models.CASCADE)

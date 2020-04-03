@@ -9,7 +9,7 @@ urlpatterns = [
     path("docs/<slug:doc>/", views.serve_doc, name="mf-serve-doc"),
     path("about/", views.about, name="mf-about"),
     path("dashboard/", views.dashboard, name="dashboard"),
-    path("create/", views.createBoard, name="create"),
-    #path("<int:id>", views.createBoard, name="board")
+    path("create/", views.create_board, name="create"),
+    # path("<int:id>", views.createBoard, name="board")
 
 ]
