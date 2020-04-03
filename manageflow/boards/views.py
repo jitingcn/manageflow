@@ -82,8 +82,8 @@ def create_Board(request):
 
 @login_required
 def dashboard(request):
-    boards = Board.objects.filter(admin=request.user)
-    return HttpResponse(boards)
+    username = user.get_username()
+    return HttpResponse("Howdy" + username)
 
 
 @login_required
@@ -96,4 +96,9 @@ def createTask(request):
     else:
         form = CreateNewTask()
     return render(request, 'boards/task.html', {'form': form})
+
+def board_post_detail(request, board_id):
+    obj = get_object_or_404(Board, id=board_id)
+    context= {"object": obj}
+    return render(request, 'boards/board_post_detail.html', context)
 
