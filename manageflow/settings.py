@@ -45,7 +45,6 @@ with open(os.path.join(BASE_DIR, "CHANGELOG.md"), encoding="utf-8") as f:
             VERSION = line.split()[1]
             break
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,11 +66,11 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.google',
     'compressor',
+    'widget_tweaks',
 ]
 CRISPY_TEMPLATE_PACK="bootstrap4"
 
 AUTH_USER_MODEL = 'accounts.User'
-LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,7 +143,6 @@ SITE_ID = 1
 
 WSGI_APPLICATION = 'manageflow.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -154,7 +152,6 @@ DATABASES = {
         "NAME": os.getenv("DB_NAME", os.path.join(BASE_DIR, 'db.sqlite3')),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -180,8 +177,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_REDIRECT_URL = "/profile"
 LOGOUT_REDIRECT_URL = "/"
 PASSWORD_HASHERS = (
-'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
 
 # Database engine
@@ -231,7 +228,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'), )
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
 SITE_ROOT = os.getenv("SITE_ROOT", "http://localhost:8000")
 SITE_NAME = os.getenv("SITE_NAME", "Manageflow")
@@ -254,6 +251,14 @@ COMPRESS_CSS_HASHING_METHOD = "content"
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+ACCOUNT_FORMS = {
+    'signup': 'manageflow.accounts.forms.CustomSignupForm',
+}
+ACCOUNT_SIGNUP_FORM_CLASS = None
 
 # Email integration
 EMAIL_HOST = os.getenv("EMAIL_HOST", "")

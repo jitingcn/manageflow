@@ -14,13 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from django.conf.urls import include, url
+from django.urls import path, include
+from manageflow.accounts import views as account_view
 
 
 urlpatterns = [
+    path("admin/login/", account_view.mf_login),
     path('admin/', admin.site.urls),
-    # path("admin/login/", accounts_views.login),
-    path("", include("manageflow.boards.urls")),
     path("", include("manageflow.accounts.urls")),
+    path("", include("manageflow.boards.urls")),
 ]

@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.conf import settings
-from django.urls import reverse
 from django.http import (
     Http404,
     HttpResponse,
@@ -13,7 +12,7 @@ from django.http import (
     HttpResponseForbidden,
     JsonResponse,
     HttpResponseRedirect)
-from .forms import CreateNewBoard
+from .forms import CreateNewBoard, CreateNewTask
 from .models import Board, Task
 
 
@@ -28,7 +27,6 @@ def index(request):
         "page": "welcome",
         "registration_open": settings.REGISTRATION_OPEN,
     }
-
     return render(request, "boards/welcome.html", ctx)
 
 
@@ -53,6 +51,7 @@ def serve_doc(request, doc="introduction"):
         "section": doc,
         "content": content,
         "first_line": content.split("\n")[0],
+        "registration_open": settings.REGISTRATION_OPEN,
     }
 
     return render(request, "boards/docs.html", ctx)
@@ -61,6 +60,7 @@ def serve_doc(request, doc="introduction"):
 def about(request):
     ctx = {
         "page": "about",
+        "registration_open": settings.REGISTRATION_OPEN,
     }
 
     return render(request, "about.html", ctx)
@@ -100,5 +100,36 @@ def createTask(request):
 
     pass
 
+@login_required
+def dashboard(request):
+    username = request.user.get_username()
+    return HttpResponse("howdy " + username)
 
 
+@login_required
+def create_board(request):
+    form = CreateNewBoard()
+
+    if request.method == "POST":
+        form = CreateNewBoard(request.POST)
+
+        if form.is_valid():
+            temp = form.save(commit=False)
+            temp.admin = request.user
+            temp.save()
+            return redirect('/dashboard/')
+
+    return render(request, 'boards/create_board.html', {'form': form})
+
+
+@login_required
+def create_task(request):
+    form = CreateNewTask()
+
+    if form.is_valid():
+        temp = form.save(commit=False)
+        temp.admin = request.user
+        temp.save()
+        return redirect('/dashboard/')
+
+    return render(request, 'create_task.html', {'form': form})

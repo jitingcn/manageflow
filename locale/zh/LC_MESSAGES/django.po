@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2020 Jiting
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Jiting <jiting@jtcat.com>, 2020.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-31 05:01+0000\n"
+"POT-Creation-Date: 2020-04-03 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,38 +17,88 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base.html:28
-msgid "authenticated"
-msgstr "已登录"
+#: manageflow/accounts/forms.py:7
+msgid "E-mail"
+msgstr "电子邮箱"
 
-#: templates/base.html:54
-msgid "About"
-msgstr "关于"
+#: manageflow/accounts/forms.py:11
+msgid "E-mail address"
+msgstr "电子邮箱地址"
 
-#: templates/base.html:57
-msgid "Docs"
-msgstr "文档"
+#: manageflow/accounts/forms.py:12 manageflow/accounts/forms.py:16
+msgid "Nickname (optional)"
+msgstr "昵称（可选）"
 
-#: templates/base.html:66
-msgid "Site Administration"
-msgstr "站点管理"
-
-#: templates/base.html:71
-msgid "Account Settings"
-msgstr "账户设置"
-
-#: templates/base.html:72
-msgid "Log Out"
-msgstr "注销"
-
-#: templates/base.html:77
-msgid "Sign In"
+#: templates/accounts/login.html:4 templates/accounts/login.html:14
+#: templates/accounts/login.html:46 templates/base.html:80
+msgid "Login"
 msgstr "登录"
 
-#: templates/base.html:82
+#: templates/accounts/login.html:19
+msgid "Incorrect email or password."
+msgstr "密码或用户名（邮箱）错误。"
+
+#: templates/accounts/login.html:24
+#, python-format
+msgid ""
+"\n"
+"          If you have not created an account yet, then please <a href="
+"\"%(signup)s\">sign up</a> first.\n"
+"        "
+msgstr ""
+"\n"
+"          如果你还没创建帐号，请先点此 <a href=\"%(signup)s\">注册</a> 吧。\n"
+"        "
+
+#: templates/accounts/login.html:43
+msgid "Forgot Password?"
+msgstr "忘记密码？"
+
+#: templates/accounts/signup.html:4
+msgid "Signup"
+msgstr "注册"
+
+#: templates/accounts/signup.html:14 templates/accounts/signup.html:29
+#: templates/base.html:85
 msgid "Sign Up"
 msgstr "注册"
 
-#: templates/base.html:104
-msgid "about"
+#: templates/accounts/signup.html:16
+#, python-format
+msgid ""
+"\n"
+"          Already have an account? Then please <a href=\"%(login)s\">sign "
+"in</a>.\n"
+"        "
+msgstr ""
+"\n"
+"          已经有一个帐号了？请点此 <a href=\"%(login)s\">登录</a>。\n"
+"        "
+
+#: templates/base.html:31
+msgid "authenticated"
+msgstr "已登录"
+
+#: templates/base.html:57 templates/base.html:106
+msgid "About"
 msgstr "关于"
+
+#: templates/base.html:60
+msgid "Docs"
+msgstr "文档"
+
+#: templates/base.html:69
+msgid "Site Administration"
+msgstr "站点管理"
+
+#: templates/base.html:74
+msgid "Account Settings"
+msgstr "账户设置"
+
+#: templates/base.html:75
+msgid "Log Out"
+msgstr "注销"
+
+#: templates/boards/create_board.html:20
+msgid "Create a Board"
+msgstr ""
