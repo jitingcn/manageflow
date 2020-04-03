@@ -8,7 +8,6 @@ urlpatterns = [
     path("docs/", views.serve_doc, name="mf-docs"),
     path("docs/<slug:doc>/", views.serve_doc, name="mf-serve-doc"),
     path("about/", views.about, name="mf-about"),
-    path("dashboard/", views.dashboard, name="dashboard"),
     path("create/", views.create_board, name="create"),
     # path("<int:id>", views.createBoard, name="board")
 

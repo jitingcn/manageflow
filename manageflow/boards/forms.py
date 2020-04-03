@@ -10,7 +10,7 @@ class CreateNewBoard(ModelForm):
 
     class Meta:
         model = Board
-        fields = ('name',)
+        fields = ('name', )
 
 
 class CreateNewTask(ModelForm):

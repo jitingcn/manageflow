@@ -17,11 +17,11 @@ from .models import Board, Task
 
 
 def index(request):
-    # if request.user.is_authenticated:
-    #     projects = list(request.profile.projects())
-    #
-    #     ctx = {"page": "projects", "projects": projects}
-    #     return render(request, "boards/projects.html", ctx)
+    if request.user.is_authenticated:
+        # projects = list(request.profile.projects())
+        #
+        # ctx = {"page": "projects", "projects": projects}
+        return redirect(f"/{request.user.get_username()}/")
 
     ctx = {
         "page": "welcome",
@@ -67,12 +67,6 @@ def about(request):
 
 
 @login_required
-def dashboard(request):
-    username = request.user.get_username()
-    return HttpResponse("howdy " + username)
-
-
-@login_required
 def create_board(request):
     form = CreateNewBoard()
 
@@ -98,4 +92,4 @@ def create_task(request):
         temp.save()
         return redirect('/dashboard/')
 
-    return render(request, 'create_task.html', {'form': form})
+    return render(request, 'task/create_task.html', {'form': form})
