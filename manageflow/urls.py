@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from manageflow.accounts import views as account_view
 
+
 urlpatterns = [
     path("admin/login/", account_view.mf_login),
     path('admin/', admin.site.urls),
