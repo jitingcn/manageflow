@@ -14,11 +14,7 @@ class CreateNewBoard(ModelForm):
         model = Board
         fields = ('name', )
 
-class CreateNewTask(ModelForm):
-    text = forms.CharField(max_length=300, help_text="Please enter a task")
-    assigned_to = forms.CharField(max_length=30, help_text= "Assigned to")
-    complete = forms.BooleanField(help_text="complete?")
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
 
 class CreateNewTask(ModelForm):
     text = forms.CharField(max_length=200)

@@ -85,17 +85,6 @@ def dashboard(request):
     username = user.get_username()
     return HttpResponse("Howdy" + username)
 
-@login_required
-def createTask(request, board_id):
-    if request.method == "POST":
-        form = CreateNewTask(request.POST)
-
-        if form.is_valid():
-            pass
-    else:
-        form = CreateNewTask()
-    return render(request, 'boards/task.html', {'form': form})
-
 def board_post_detail(request, board_id):
     obj = get_object_or_404(Board, id=board_id)
     context = {"object": obj}
