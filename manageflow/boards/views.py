@@ -92,4 +92,4 @@ def create_task(request):
         temp.save()
         return redirect('/dashboard/')
 
-    return render(request, 'task/create_task.html', {'form': form})
+    return render(request, 'boards/task.html', {'form': form})

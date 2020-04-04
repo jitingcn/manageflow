@@ -85,6 +85,7 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(blank=True)
     url = models.URLField(blank=True)
+    # role = models
 
     objects = ProfileManager()
 
@@ -126,6 +127,7 @@ class Project(models.Model):
     code = models.UUIDField(default=uuid.uuid4, unique=True)
     name = models.CharField(max_length=200, blank=True)
     owner = models.ForeignKey(User, models.CASCADE)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name or self.owner.email

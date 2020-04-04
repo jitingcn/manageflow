@@ -22,7 +22,7 @@ class Board(models.Model):
 
 
 class Task(models.Model):
-    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    #board = models.ForeignKey(Board, on_delete=models.CASCADE)
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=300)
     complete = models.BooleanField()
