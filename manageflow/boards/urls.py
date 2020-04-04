@@ -10,5 +10,6 @@ urlpatterns = [
     path("about/", views.about, name="mf-about"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("create/", views.create_Board, name="create"),
-
+    path("board/<str:board_id>/", views.board_post_detail),
+    path("Task/", views.createTask),
 ]

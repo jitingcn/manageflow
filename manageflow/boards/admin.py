@@ -1,5 +1,11 @@
 from django.contrib import admin
 from .models import Board, Task
 
-admin.site.register(Board)
-admin.site.register(Task)
+class BoardAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ['board', 'text']
+
+admin.site.register(Board, BoardAdmin)
+admin.site.register(Task, TaskAdmin)

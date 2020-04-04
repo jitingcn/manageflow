@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import Group
-from .models import Board
+from .models import Board, Task
 
 #import models here
 
@@ -13,6 +13,13 @@ class CreateNewBoard(ModelForm):
         model = Board
         fields = ('name',)
 
+class CreateNewTask(ModelForm):
+    text = forms.CharField(max_length=200)
+    complete = forms.BooleanField()
+    assigned_to =forms.CharField(max_length=100)
 
+    class Meta:
+        model = Task
+        fields = ('board', 'text', 'complete', 'assigned_to')
 
 

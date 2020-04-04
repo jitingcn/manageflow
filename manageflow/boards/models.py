@@ -30,7 +30,7 @@ class Task(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=300)
-    complete = models.BooleanField()
+    complete = models.BooleanField(default=False)
     assigned_to = models.CharField(max_length=30)
 
     def save(self, *args, **kwargs):

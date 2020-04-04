@@ -1,0 +1,13 @@
+- extends "base.html"
+- load i18n compress static mf_extras widget_tweaks
+
+{% block title %}{% trans "Profile" %} - {% site_name %}{% endblock %}
+
+- block content
+  .mt-3
+    <h2>hello, {{ nickname }}</h2>
+    <ul>
+      <li>avatar: {{ user.profile.avatar }}</li>
+      <li>Username: {{ user.username }}</li>
+      <li>bio: {{ user.profile.bio }}</li>
+    </ul>

@@ -12,7 +12,7 @@ from django.http import (
     HttpResponseForbidden,
     JsonResponse,
     HttpResponseRedirect)
-from .forms import CreateNewBoard
+from .forms import CreateNewBoard, CreateNewTask
 from .models import Board, Task
 
 
@@ -86,4 +86,19 @@ def dashboard(request):
     boards = Board.objects.filter(admin=request.user)
     return HttpResponse(boards)
 
+@login_required
+def createTask(request, board_id):
+    if request.method == "POST":
+        form = CreateNewTask(request.POST)
+
+        if form.is_valid():
+            pass
+    else:
+        form = CreateNewTask()
+    return render(request, 'boards/task.html', {'form': form})
+
+def board_post_detail(request, board_id):
+    obj = get_object_or_404(Board, id=board_id)
+    context = {"object": obj}
+    return render(request, 'boards/board_post_detail.html', context)
 
