@@ -71,6 +71,7 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK="bootstrap4"
 
 AUTH_USER_MODEL = 'accounts.User'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -174,7 +175,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "/profile"
+LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',

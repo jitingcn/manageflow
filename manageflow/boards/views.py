@@ -17,11 +17,11 @@ from .models import Board, Task
 
 
 def index(request):
-    # if request.user.is_authenticated:
-    #     projects = list(request.profile.projects())
-    #
-    #     ctx = {"page": "projects", "projects": projects}
-    #     return render(request, "boards/projects.html", ctx)
+    if request.user.is_authenticated:
+        # projects = list(request.profile.projects())
+        #
+        # ctx = {"page": "projects", "projects": projects}
+        return redirect(f"/{request.user.get_username()}/")
 
     ctx = {
         "page": "welcome",
@@ -75,7 +75,6 @@ def create_Board(request):
 
         if form.is_valid():
             temp = form.save(commit=False)
-            temp.admin = request.user
             temp.save()
             return redirect('/dashboard/')
 
@@ -83,8 +82,8 @@ def create_Board(request):
 
 @login_required
 def dashboard(request):
-    boards = Board.objects.filter(admin=request.user)
-    return HttpResponse(boards)
+    username = user.get_username()
+    return HttpResponse("Howdy" + username)
 
 @login_required
 def createTask(request, board_id):
@@ -100,5 +99,21 @@ def createTask(request, board_id):
 def board_post_detail(request, board_id):
     obj = get_object_or_404(Board, id=board_id)
     context = {"object": obj}
+    return render(request, 'boards/board_post_detail.html', context)
+
+@login_required
+def createTask(request):
+    if request.method == "POST":
+        form = CreateNewTask(request.POST)
+
+        if form.is_valid():
+            pass
+    else:
+        form = CreateNewTask()
+    return render(request, 'boards/task.html', {'form': form})
+
+def board_post_detail(request, board_id):
+    obj = get_object_or_404(Board, id=board_id)
+    context= {"object": obj}
     return render(request, 'boards/board_post_detail.html', context)
 

@@ -66,35 +66,41 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_absolute_url(self):
         return f"{self.username}"
 
+    def get_nickname(self):
+        return f"{self.nickname}"
+
 
 class ProfileManager(models.Manager):
-    @staticmethod
     def for_user(self, user):
         try:
             return user.profile
         except UserProfile.DoesNotExist:
-            profile = UserProfile(user=user)
+            profile = UserProfile(owner=user)
             profile.save()
             return profile
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, models.CASCADE, blank=True, null=True)
+    owner = models.OneToOneField(User, models.CASCADE, blank=True, null=True, related_name="profile")
     bio = models.CharField(max_length=200, blank=True)
-    avatar = models.ImageField()
-    url = models.URLField()
+    avatar = models.ImageField(blank=True)
+    url = models.URLField(blank=True)
 
-    object = ProfileManager()
+    objects = ProfileManager()
 
     def __str__(self):
-        return f"Profile for {self.user.username}"
+        return f"Profile for {self.owner.username}"
+
+    @property
+    def owner_profile(self):
+        return UserProfile.objects.for_user(self.owner)
 
     def send_change_email_link(self):  # TODO
         pass
 
     def project(self):
-        is_owner = Q(owner=self.user)
-        is_member = Q(mamber_user=self.user)
+        is_owner = Q(owner=self.owner)
+        is_member = Q(mamber_user=self.owner)
         q = Project.objects.filter(is_owner | is_member)
         return q.distinct().order_by("name")
 
