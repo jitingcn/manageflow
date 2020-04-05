@@ -13,14 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 from manageflow.accounts import views as account_view
 
 
 urlpatterns = [
     path("admin/login/", account_view.mf_login),
     path('admin/', admin.site.urls),
-    path("", include("manageflow.accounts.urls")),
     path("", include("manageflow.boards.urls")),
-]
+    path("", include("manageflow.accounts.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

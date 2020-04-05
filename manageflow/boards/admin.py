@@ -8,4 +8,4 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ['board', 'text', 'assigned_to']
 
 admin.site.register(Board, BoardAdmin)
-admin.site.register(Task, TaskAdmin)
+admin.site.register(Task)

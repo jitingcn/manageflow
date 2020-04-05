@@ -14,6 +14,7 @@ class Board(models.Model):
     slug = models.SlugField(unique=True)
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Board")
     name = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
 
     class meta:
         ordering =('name',)
@@ -35,7 +36,8 @@ class Board(models.Model):
 
 
 class Task(models.Model):
-    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    board =  models.ForeignKey(Board, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=300)
     complete = models.BooleanField(default=False)
@@ -49,4 +51,6 @@ class Task(models.Model):
         return self.text
 
 
-
+#class BoardTask(models.Model):
+#    board = models.ForeignKey(Board, models.CASCADE, related_name="board")
+#    task = models.ForeignKey(Task, models.CASCADE)

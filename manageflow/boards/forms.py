@@ -1,28 +1,31 @@
 from django import forms
 from django.forms import ModelForm
-from django.contrib.auth.models import Group
 from .models import Board, Task
 
 #import models here
 
 
 class CreateNewBoard(ModelForm):
-    name = forms.CharField(max_length=200, help_text="Please enter the Board name")
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    name = forms.CharField(max_length=200,
+                           widget=forms.TextInput(attrs={'type': 'name',
+                                                         'placeholder': "Please enter the Board name"}))
+    description = forms.CharField(widget=forms.TextInput(attrs={'type': 'description',
+                                                                'placeholder': "Please enter the Board description"}),
+                                  required=False)
+    # slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Board
-        fields = ('name', )
+        fields = ('name', 'description')
 
 
 
 class CreateNewTask(ModelForm):
-    text = forms.CharField(max_length=200)
-    complete = forms.BooleanField()
-    assigned_to =forms.CharField(max_length=100)
+    text = forms.CharField(max_length=300, help_text="Please enter a task")
+    assigned_to = forms.CharField(max_length=30, help_text="Assigned to")
+    complete = forms.BooleanField(help_text="complete?")
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Task
-        fields = ('board', 'text', 'complete', 'assigned_to')
-
-
+        fields = ('board', 'text', 'complete', 'assigned_to', 'slug')

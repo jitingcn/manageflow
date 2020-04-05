@@ -21,7 +21,7 @@ def index(request):
         # projects = list(request.profile.projects())
         #
         # ctx = {"page": "projects", "projects": projects}
-        return redirect(f"/{request.user.get_username()}/")
+        return redirect(f"/{request.user.get_username()}/boards")
 
     ctx = {
         "page": "welcome",
@@ -67,18 +67,26 @@ def about(request):
 
 
 @login_required
-def create_Board(request):
+def boards(request, username):
+    if username == request.user.get_username():
+        return render(request, 'boards/boards.html', {'': ''})
+    return HttpResponseForbidden
+
+
+@login_required
+def create_board(request, username):
     form = CreateNewBoard()
 
     if request.method == "POST":
-        form = CreateNewBoard(request.POST)
+        if username == request.user.get_username():
+            form = CreateNewBoard(request.POST)
 
-        if form.is_valid():
-            temp = form.save(commit=False)
-            temp.admin = request.user
-            temp.save()
-            return redirect('/dashboard/')
-            # return HttpResponseRedirect("/board/%i" %temp.id)
+            if form.is_valid():
+                temp = form.save(commit=False)
+                temp.admin = request.user
+                temp.save()
+                return redirect(f"/{request.user.get_username()}/boards")
+        return HttpResponseForbidden
 
     return render(request, 'boards/create_board.html', {'form': form})
 
@@ -88,14 +96,8 @@ def dashboard(request):
     return HttpResponse("Howdy" )
 
 
-def board_post_detail(request, board_id):
-    obj = get_object_or_404(Board, id=board_id)
-    context = {"object": obj}
-    return render(request, 'boards/board_post_detail.html', context)
-
-
 @login_required
-def createTask(request):
+def create_task(request):
     if request.method == "POST":
         form = CreateNewTask(request.POST)
 

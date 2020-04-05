@@ -1,6 +1,7 @@
 {% block content %}
     <h1>{{ object.name}}</h1>
     <form method ="post" action="#">
+        {% csrf_token %}
         <ul>
 		{% for task in tasks %}
 			{% if task.complete == True %}

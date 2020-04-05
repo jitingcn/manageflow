@@ -246,6 +246,11 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 )
+
+MEDIA_URL = '/media/'
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = MEDIA_DIR
+
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = False
 COMPRESS_CSS_HASHING_METHOD = "content"
