@@ -5,7 +5,7 @@ class BoardAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['board', 'text']
+    list_display = ['board', 'text', 'assigned_to']
 
 admin.site.register(Board, BoardAdmin)
 admin.site.register(Task, TaskAdmin)

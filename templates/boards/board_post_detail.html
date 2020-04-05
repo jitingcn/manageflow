@@ -1,4 +1,10 @@
 {% block content %}
-    <h1>{{ object.name}}</h1>
+    <h1>{{ object.name}}</h>
+        <ul>
+            {%  for task in tasks %}
+                <li>{{ task.text }} is assigned to {{ task.assigned_to }}</li>
+            {% endfor %}
+        </ul>
     <p>Created by {{object.admin.username  }}</p>
+
 {% endblock %}

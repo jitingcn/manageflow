@@ -107,7 +107,6 @@ def createTask(request):
 
 def board_post_detail(request, board_id):
     obj = get_object_or_404(Board, id=board_id)
-    #boardName= board.name
-    context = {"object": obj}
-    inctasks= Task.objects.filter(board=obj)
-    return HttpResponse(inctasks)
+    taskobj= Task.objects.filter(board=obj)
+    context = {"object": obj, "tasks": taskobj}
+    return render(request, 'boards/board_post_detail.html', context)
