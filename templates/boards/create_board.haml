@@ -1,18 +1,22 @@
 - extends "base.html"
-- load i18n compress static mf_extras
+- load i18n compress static mf_extras widget_tweaks
 
 {% block title %}Board - {% site_name %}{% endblock %}
 
+- block extra_css
+  %link(rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss")
+
 - block content
   .mt-3
-    %h1 Add a Board
-    %form(id="create" method="post" action="/create/")
+    %form.form-float.mt-3(id="create" method="post" action="/{{ user.get_username }}/boards/create/")
       - csrf_token
-      - for hidden in form.hidden_fields
-        = hidden
-      - for field in form.visible_fields
-        = field.errors
-        = field.help_text
-        = field
-      %button.btn.btn-sm.btn-primary.btn-block(type="submit")
+      %h1.text-center Add a Board
+      - if form.non_field_errors
+        <p class="text-danger">{{ form.non_field_errors|join:"" }}</p>
+      - for item in form
+        .form-label-group
+          - render_field item class+="form-control"
+          %label(for="id_#{item.name}")<
+            = item.label
+      %button.mt-3.btn.btn-sm.btn-primary.btn-block(type="submit")
         - trans "Create a Board"

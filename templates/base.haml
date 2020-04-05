@@ -23,7 +23,7 @@
   %nav.navbar.navbar-expand-sm.navbar-dark.fixed-top.bg-primary
     <a href="{% url 'mf-index' %}" class="navbar-brand" id="base-url">
       {% if request.user.is_authenticated %}
-        - trans "authenticated"
+        - trans "Welcome"
       {% else %}
         - site_name
       {% endif %}
@@ -42,11 +42,9 @@
       %ul.navbar-nav.mr-auto
         - if request.user.is_authenticated
           %li.nav-item
-            %a.nav-link(href="#") Project
-          %li.nav-item
-            %a.nav-link(href="#") Link1
-          %li.nav-item
-            %a.nav-link(href="#") Link2
+            %a.nav-link(href="{% url 'mf-boards' user.get_username %}") Boards
+          -#%li.nav-item
+          -#  %a.nav-link(href="#") Group
       %ul.navbar-nav.ml-auto
         - if not request.user.is_authenticated
           %li.nav-item.ml-sm-2
@@ -68,10 +66,10 @@
                   - trans "Site Administration"
                 %div.dropdown-divider
               .dropdown-header<
-                Teams
+                Groups
               -# for team in request.profile.team
               .dropdown-divider
-              %a.dropdown-item(href="{% url 'mf-index' %}" )<
+              %a.dropdown-item(href="{% url 'profile' user.get_username %}" )<
                 - trans "Account Settings"
               %a.dropdown-item(href="{% url 'logout' %}" )<
                 - trans "Log Out"
@@ -88,12 +86,11 @@
     %main.container(role="main" )
       - block content
         .mt-3
-          %h1 Example Text
   - block footer
     %footer.footer
       .container<
         %span.text-muted<
-          Example footer text
+          @2020
         - if request.user.is_authenticated
           %span.about
             %a(href="{% url 'mf-about' %}")<

@@ -4,12 +4,17 @@ from .models import Board, Task
 
 
 class CreateNewBoard(ModelForm):
-    name = forms.CharField(max_length=200, help_text="Please enter the Board name")
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    name = forms.CharField(max_length=200,
+                           widget=forms.TextInput(attrs={'type': 'name',
+                                                         'placeholder': "Please enter the Board name"}))
+    description = forms.CharField(widget=forms.TextInput(attrs={'type': 'description',
+                                                                'placeholder': "Please enter the Board description"}),
+                                  required=False)
+    # slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Board
-        fields = ('name', )
+        fields = ('name', 'description')
 
 
 class CreateNewTask(ModelForm):
