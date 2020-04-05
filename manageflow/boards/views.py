@@ -78,6 +78,7 @@ def create_Board(request):
             temp.admin = request.user
             temp.save()
             return redirect('/dashboard/')
+            # return HttpResponseRedirect("/board/%i" %temp.id)
 
     return render(request, 'boards/create_board.html', {'form': form})
 
