@@ -98,16 +98,21 @@ def dashboard(request):
     return render(request, 'boards/dashboard.html', context)
 
 
-@login_required
-def create_task(request):
-    if request.method == "POST":
-        form = CreateNewTask(request.POST)
+def create_task(request,username):
+    form = CreateNewTask()
 
-        if form.is_valid():
-            pass
-    else:
-        form = CreateNewTask()
+    if request.method == "POST":
+        if username == request.user.get_username():
+            form = CreateNewTask(request.POST)
+
+            if form.is_valid():
+                temp = form.save(commit=False)
+                temp.admin = request.user
+                temp.save()
+                return redirect("/dashboard")
+
     return render(request, 'boards/task.html', {'form': form})
+
 
 
 def board_post_detail(request, board_id):

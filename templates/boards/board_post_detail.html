@@ -1,20 +1,13 @@
 {% block content %}
     <h1>{{ object.name}}</h1>
-    <form method ="post" action="#">
-        {% csrf_token %}
         <ul>
 		{% for task in tasks %}
 			{% if task.complete == True %}
-                <li><input type="checkbox", value="clicked", name="{{ task.id }}" checked>{{ task.text }} is assigned to {{ task.assigned_to }}</li>
+                <li><input type="checkbox", value="clicked", name="c{{ task.id }}" checked>{{ task.text }} is assigned to {{ task.assigned_to }}</li>
                 {% else %}
-                    <li><input type="checkbox", value="clicked", name="{{ task.id }}" >{{ task.text }} is assigned to {{ task.assigned_to }}</li>
+                    <li><input type="checkbox", value="clicked", name="c{{ task.id }}" >{{ task.text }} is assigned to {{ task.assigned_to }}</li>
                 {% endif %}
 		{% endfor %}
 	</ul>
-    <button type = "submit", name ="save", value="save">Save</button>
-    <input type="text", name="new">
-        <button type="submit", name="newTask", value="newTask">Add Task</button>
-
-    </form>
     <p>Created by {{object.admin.username  }}</p>
 {% endblock %}
