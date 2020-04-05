@@ -23,7 +23,7 @@ class CreateNewBoard(ModelForm):
 class CreateNewTask(ModelForm):
     text = forms.CharField(max_length=300, help_text="Please enter a task")
     assigned_to = forms.CharField(max_length=30, help_text="Assigned to")
-    complete = forms.BooleanField(help_text="complete?")
+    complete = forms.BooleanField(initial=False, required=False, help_text="complete?")
 
     class Meta:
         model = Task

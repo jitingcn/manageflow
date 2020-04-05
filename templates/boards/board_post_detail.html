@@ -3,11 +3,12 @@
         <ul>
 		{% for task in tasks %}
 			{% if task.complete == True %}
-                <li><input type="checkbox", value="clicked", name="c{{ task.id }}" checked>{{ task.text }} is assigned to {{ task.assigned_to }}</li>
+                <li><input type="checkbox", value="clicked", name="{{ task.id }}" checked>{{ task.text }} is assigned to {{ task.assigned_to }}</li>
                 {% else %}
-                    <li><input type="checkbox", value="clicked", name="c{{ task.id }}" >{{ task.text }} is assigned to {{ task.assigned_to }}</li>
+                    <li><input type="checkbox", value="clicked", name="{{ task.id }}" >{{ task.text }} is assigned to {{ task.assigned_to }}</li>
                 {% endif %}
 		{% endfor %}
 	</ul>
+    <a href="/{{object.admin.username }}/task/create">Add Task</a>
     <p>Created by {{object.admin.username  }}</p>
 {% endblock %}
