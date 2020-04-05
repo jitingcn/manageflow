@@ -75,20 +75,23 @@ def create_Board(request):
 
         if form.is_valid():
             temp = form.save(commit=False)
+            temp.admin = request.user
             temp.save()
             return redirect('/dashboard/')
 
     return render(request, 'boards/create_board.html', {'form': form})
 
+
 @login_required
 def dashboard(request):
-    username = user.get_username()
-    return HttpResponse("Howdy" + username)
+    return HttpResponse("Howdy" )
+
 
 def board_post_detail(request, board_id):
     obj = get_object_or_404(Board, id=board_id)
     context = {"object": obj}
     return render(request, 'boards/board_post_detail.html', context)
+
 
 @login_required
 def createTask(request):
@@ -101,8 +104,10 @@ def createTask(request):
         form = CreateNewTask()
     return render(request, 'boards/task.html', {'form': form})
 
+
 def board_post_detail(request, board_id):
     obj = get_object_or_404(Board, id=board_id)
-    context= {"object": obj}
-    return render(request, 'boards/board_post_detail.html', context)
-
+    #boardName= board.name
+    context = {"object": obj}
+    inctasks= Task.objects.filter(board=obj)
+    return HttpResponse(inctasks)
