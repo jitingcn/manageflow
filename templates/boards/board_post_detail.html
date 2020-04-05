@@ -1,10 +1,13 @@
 {% block content %}
     <h1>{{ object.name}}</h>
         <ul>
-            {%  for task in tasks %}
-                <li>{{ task.text }} is assigned to {{ task.assigned_to }}</li>
-            {% endfor %}
-        </ul>
+		{% for task in tasks %}
+			{% if task.complete == True %}
+				<li>{{task.text}} is assigned to {{ task.assigned_to }} - COMPLETE</li>
+			{% else %}
+				<li>{{task.text}} is assigned to {{ task.assigned_to }} - INCOMPLETE</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
     <p>Created by {{object.admin.username  }}</p>
-
 {% endblock %}
