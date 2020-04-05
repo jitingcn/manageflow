@@ -93,7 +93,9 @@ def create_board(request, username):
 
 @login_required
 def dashboard(request):
-    return HttpResponse("Howdy" )
+    UsersBoards=  Board.objects.filter(admin=request.user)
+    context = {"board":UsersBoards}
+    return render(request, 'boards/dashboard.html', context)
 
 
 @login_required

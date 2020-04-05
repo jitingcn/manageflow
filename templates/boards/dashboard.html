@@ -1,0 +1,12 @@
+{% block title %}
+Your Boards
+{% endblock %}
+
+{% block content %}
+    {% for b in board %}
+        <ul>
+            <li><a href="/board/{{b.id}}">{{b.name}}</a></li>
+        </ul>
+
+    {% endfor %}
+{% endblock %}
