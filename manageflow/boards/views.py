@@ -90,8 +90,9 @@ def dashboard(request, username):
     return render(request, 'boards/boards.html', context)
 
 
-def create_task(request,username):
+def create_task(request,username,board_id):
     form = CreateNewTask()
+    board= get_object_or_404(Board, id=board_id)
 
     if request.method == "POST":
         if username == request.user.get_username():
@@ -100,10 +101,11 @@ def create_task(request,username):
             if form.is_valid():
                 temp = form.save(commit=False)
                 temp.admin = request.user
+                temp.board = board
                 temp.save()
-                return redirect("/dashboard")
+                return redirect(f"/board/{board_id}")
 
-    return render(request, 'boards/task.html', {'form': form})
+    return render(request, 'boards/task.html', {'form': form, 'board': board})
 
 
 

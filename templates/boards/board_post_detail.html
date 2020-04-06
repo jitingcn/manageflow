@@ -11,6 +11,6 @@
                 {% endif %}
 		{% endfor %}
 	</ul>
-    <a href="/{{object.admin.username }}/task/create">Add Task</a>
+    <a href="/{{object.admin.username }}/{{ object.id }}/task/create">Add Task</a>
     <p>Board is created by {{object.admin.username  }}</p>
 {% endblock %}

@@ -11,6 +11,6 @@ urlpatterns = [
     path("board/<str:board_id>/", views.board_post_detail),
     path("<str:username>/boards/", views.dashboard, name="mf-boards"),
     path("<str:username>/boards/create/", views.create_board, name="create-board"),
-    path("<str:username>/task/create/", views.create_task, name="create-task"),
+    path("<str:username>/<str:board_id>/task/create/", views.create_task, name="create-task"),
     #path("task/create/", views.create_task, name="create-task"),
 ]
