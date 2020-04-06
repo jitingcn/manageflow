@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% load i18n compress mf_extras static %}
 {% block content %}
     <h1>{{ object.name}}</h1>
         <ul>
@@ -10,5 +12,5 @@
 		{% endfor %}
 	</ul>
     <a href="/{{object.admin.username }}/task/create">Add Task</a>
-    <p>Created by {{object.admin.username  }}</p>
+    <p>Board is created by {{object.admin.username  }}</p>
 {% endblock %}
