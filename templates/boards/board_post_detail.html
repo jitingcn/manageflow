@@ -1,18 +1,33 @@
 {% extends "base.html" %}
 {% load i18n compress mf_extras static %}
 {% block content %}
-  <h1>{{ object.name }}</h1>
-  <ul>
-    {% for task in tasks %}
-      {% if task.complete == True %}
-        <li><input type="checkbox" , value="clicked" , name="{{ task.id }}" checked>{{ task.text }} is assigned
-          to {{ task.assigned_to }}</li>
-      {% else %}
-        <li><input type="checkbox" , value="clicked" , name="{{ task.id }}">{{ task.text }} is assigned
-          to {{ task.assigned_to }}</li>
-      {% endif %}
-    {% endfor %}
-  </ul>
-  <a href="/{{ object.admin.username }}/{{ object.id }}/task/create">Add Task</a>
-  <p>Board is created by {{ object.admin.username }}</p>
+<div class="container">
+
+  <div class="row justify-content-center">
+    <h1>{{ object.name }}</h1>
+  </div>
+  <div class="row justify-content-center">
+    <div class="boardtable">
+      <table>
+        <tr>
+          <th>Task</th>
+          <th>Status</th>
+          <th width="60%">Workers</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+          <td>{{ task.text }}</td>
+          <td>{% if task.complete == True %}Completed{% else %}imCompleted{% endif %}</td>
+          <td>{{ task.assigned_to }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="row mt-5 justify-content-center">
+    <p class="float-right">Board is created by {{ object.admin.username }}</p>
+    <a href="/{{ object.admin.username }}/{{ object.id }}/task/create">Add Task</a>
+  </div>
+</div>
+
 {% endblock %}
