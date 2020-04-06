@@ -1,20 +1,29 @@
 {% extends "base.html" %}
-{% load i18n compress static mf_extras %}
+{% load i18n compress static mf_extras widget_tweaks %}
 
 {% block title %}Task - {% site_name %}{% endblock %}
-
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/float-label.scss' %}" type="text/x-scss">
+{% endblock %}
 {% block content %}
   <div class="mt-3">
-    <h1>Add a Task</h1>
-    <form method="post" action="/{{ user.get_username }}/{{ board.id }}/task/create/" id="create">
+    <form method="post" action="/{{ user.get_username }}/{{ board.id }}/task/create/" class="form-float mt-3"
+          id="create">
       {% csrf_token %}
-      {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-      {% endfor %}
+      <h1 class="text-center">Add a Task</h1>
+      {% if form.non_field_errors %}
+        <p class="text-danger">{{ form.non_field_errors|join:"" }}</p>
+      {% endif %}
       {% for field in form.visible_fields %}
-        {{ field.errors }}
-        {{ field.help_text }}
-        {{ field }}
+        <div class="form-label-group">
+          <p class="text-danger">{{ field.errors }}</p>
+          {% if field.name == "complete" %}
+            {% render_field field %}
+          {% else %}
+            {% render_field field class+="form-control" %}
+          {% endif %}
+          <label for="id_{{ field.name }}">{{ field.help_text }}</label>
+        </div>
       {% endfor %}
       <button type="submit" class="btn btn-sm btn-primary btn-block">
         {% trans "Create a Task" %}

@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from .models import Board, Task
 
 
-#import models here
+# import models here
 
 
 class CreateNewBoard(ModelForm):
@@ -13,12 +13,12 @@ class CreateNewBoard(ModelForm):
     description = forms.CharField(widget=forms.TextInput(attrs={'type': 'description',
                                                                 'placeholder': "Please enter the Board description"}),
                                   required=False)
+
     # slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Board
         fields = ('name', 'description')
-
 
 
 class CreateNewTask(ModelForm):
@@ -28,12 +28,4 @@ class CreateNewTask(ModelForm):
 
     class Meta:
         model = Task
-        fields = ( 'text', 'complete', 'assigned_to')
-
-
-
-
-
-
-
-
+        fields = ('text', 'assigned_to', 'complete')
