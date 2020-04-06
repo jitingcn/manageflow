@@ -36,7 +36,7 @@
                   {% if task.complete == True %}
                     <td>Completed</td>
                     <td>
-                      <button disabled>Done</button>
+                      <button disabled class="btn btn-dark btn-outline-secondary">Done</button>
                     </td>
                   {% else %}
                     <td>Working</td>
@@ -44,7 +44,7 @@
                       <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="{{ task.id }}">
-                        <button>Done</button>
+                        <button class="btn btn-light btn-outline-success">Done</button>
                       </form>
                     </td>
                   {% endif %}
@@ -53,7 +53,7 @@
                       {% csrf_token %}
                       <input type="hidden" name="action" value="{{ task.id }}">
                       <input type="hidden" name="delete" value="yes">
-                      <button>Delete</button>
+                      <button class="btn btn-light btn-outline-danger">Delete</button>
 
                     </form>
                   </td>

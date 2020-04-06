@@ -30,20 +30,20 @@
                   - if task.complete == True
                     %td Completed
                     %td
-                      %button(disabled) Done
+                      %button.btn.btn-dark.btn-outline-secondary(disabled) Done
                   - else
                     %td Working
                     %td
                       %form(method="post")
                         - csrf_token
                         %input(type="hidden" name="action" value="{{ task.id }}")
-                        %button Done
+                        %button.btn.btn-light.btn-outline-success Done
                   %td
                     %form(method="post")
                       - csrf_token
                       %input(type="hidden" name="action" value="{{ task.id }}")
                       %input(type="hidden" name="delete" value="yes")
-                      %button Delete
+                      %button.btn.btn-light.btn-outline-danger Delete
 
 - block footer
   %footer.footer
