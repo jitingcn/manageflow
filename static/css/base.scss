@@ -7,7 +7,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background-color: #FFFAFA;
+  background-color: #fffafa;
 }
 
 .footer {
@@ -21,8 +21,8 @@ body {
   background-color: #f5f5f5;
 }
 
-  /* Custom page CSS--- */
-  /* Not required for template or sticky footer method. */
+/* Custom page CSS--- */
+/* Not required for template or sticky footer method. */
 
 body > .container {
   padding: 60px 15px 0;
@@ -40,4 +40,23 @@ code {
 .about {
   float: right;
   text-align: right;
+}
+
+.boardtable {
+  margin-top: 50px;
+}
+.boardtable table {
+  border: 2px solid #154adb;
+  border-spacing: 0;
+  width: 600px;
+}
+.boardtable td {
+  padding: 5px;
+  border: 1px solid #154adb;
+}
+.boardtable td a {
+  text-decoration: none;
+}
+.boardtable tr:nth-of-type(odd) {
+  background-color: #ddeaf0;
 }
