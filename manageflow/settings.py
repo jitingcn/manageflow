@@ -55,8 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django_filters',
-    "crispy_forms",
     'manageflow.accounts',
     'manageflow.boards',
     'allauth',
@@ -68,7 +66,6 @@ INSTALLED_APPS = [
     'compressor',
     'widget_tweaks',
 ]
-CRISPY_TEMPLATE_PACK="bootstrap4"
 
 AUTH_USER_MODEL = 'accounts.User'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
@@ -85,11 +82,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'manageflow.urls'
-
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR, ]
-STATIC_URL = '/static/'
-
 
 TEMPLATES = [
     {
@@ -234,7 +226,6 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 SITE_ROOT = os.getenv("SITE_ROOT", "http://localhost:8000")
 SITE_NAME = os.getenv("SITE_NAME", "Manageflow")
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -278,6 +269,6 @@ EMAIL_USE_VERIFICATION = env_to_bool("EMAIL_USE_VERIFICATION", "True")
 SHELL_ENABLED = env_to_bool("SHELL_ENABLED", "False")
 
 if os.path.exists(os.path.join(BASE_DIR, "manageflow/local_settings.py")):
-   from .local_settings import *
+    from .local_settings import *
 else:
-   warnings.warn("local_settings.py not found, using defaults")
+    warnings.warn("local_settings.py not found, using defaults")
