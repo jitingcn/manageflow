@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load compress mf_extras static %}
+{% load i18n compress mf_extras static %}
 
 {% block content %}
 <div class="container">
@@ -7,27 +7,27 @@
     <div class="col-auto">
       <h1>Make Managing Simple</h1>
     </div>
+    <div class="col-sm-2 mt-3 mx-5 my-3">
+      <a href="{% url 'signup' %}" class="btn btn-block btn-success my-2 my-sm-0">{% trans "Sign Up" %}</a>
+    </div>
   </div>
   <div class="row mt-5">
-    <div class="col-6 col-md-3 border-right">
+    <div class="col-6 col-sm-6 border-right">
       <div class="p-3">
-        <h2>Updates</h2>
-        <p>sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext
+        <h2>Simple</h2>
+        <p>This site is very simple to use and no complicated place, you can fully master it within 1 minute.
         </p>
-        <p><a href="#" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        <p><a href="{% url 'mf-docs' %}" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
       </div>
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-6 col-sm-6">
       <div class="p-3">
-        <h2>Updates</h2>
-        <p>sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext
+        <h2>Manage</h2>
+        <p>Designed for individuals or small teams, it can be used as a todo list or project management tool.
         </p>
-        <p><a href="#" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        <p><a href="{% url 'mf-docs' %}" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
       </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <img src="{% static 'img/front.jpg' %}" class="mt-3 img-fluid" alt="Responsive image">
     </div>
   </div>
 </div>
-{% endblock %}LoginLogin
+{% endblock %}
