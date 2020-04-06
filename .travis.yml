@@ -1,0 +1,21 @@
+dist: bionic
+language: python
+python: 3.7.2
+
+cache:
+  - pip
+
+if: commit_message =~ /(\[BUILD\]|\[TEST\])/
+
+install:
+  - pip install pipenv
+  - pipenv sync
+
+script:
+  - pipenv run python manage.py makemigrations
+  - pipenv run python manage.py migrate
+  - pipenv run python manage.py compilemessages
+  - pipenv run python manage.py compress --force
+  - pipenv run python manage.py collectstatic --no-input
+  - pipenv run python population_script.py || exit 3
+  - pipenv run python manage.py test

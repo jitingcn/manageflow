@@ -9,16 +9,15 @@ class LoginTestCase(BaseTestCase):
 
     def test_username_login(self):
         form = {"login": "user", "password": "password"}
-        r = self.client.post("/login/", form)
-        self.assertRedirects(r, "/")
-
-        r = self.client.get("/")
-        self.assertContains(r, "authenticated")
+        self.client.post("/login/", form)
+        r = self.client.get("/user/boards/")
+        self.assertContains(r, "Welcome")
 
     def test_email_login(self):
         form = {"login": "user@example.org", "password": "password"}
-        r = self.client.post("/login/", form)
-        self.assertRedirects(r, "/")
+        self.client.post("/login/", form)
+        r = self.client.get("/user/boards/")
+        self.assertContains(r, "Welcome")
 
     def test_wrong_password(self):
         form = {"login": "user", "password": "wrong password"}
