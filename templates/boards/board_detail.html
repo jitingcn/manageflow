@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n compress static mf_extras widget_tweaks %}
+
+{% block title %}{{ object.name }} | {% trans "Boards" %} - {% site_name %}{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="control-box p-3">
+            <p class="text-center mt-3">
+              <a href="{% url 'mf-boards' user.get_username %}" class="btn btn-primary btn-block">Back to Boards</a>
+            </p>
+            <p class="text-center mt-4">
+              <a href="/{{ object.admin.username }}/{{ object.id }}/task/create" class="btn btn-success btn-block">Add Task</a>
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-9 mt-4 table-responsive">
+          <table class="table table-bordered table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 50%" class="text-left ml-2">Task</th>
+                <th scope="col" style="width: 20%">Assignee</th>
+                <th scope="col" style="width: 10%">Status</th>
+                <th scope="col" style="width: 10%">Done?</th>
+                <th scope="col" style="width: 10%">Delete?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for task in tasks %}
+                <tr>
+                  <td class="text-left">{{ task.text }}</td>
+                  <td>{{ task.assigned_to }}</td>
+                  {% if task.complete == True %}
+                    <td>Completed</td>
+                    <td>
+                      <button disabled>Done</button>
+                    </td>
+                  {% else %}
+                    <td>Working</td>
+                    <td>
+                      <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="{{ task.id }}">
+                        <button>Done</button>
+                      </form>
+                    </td>
+                  {% endif %}
+                  <td>
+                    <form method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="{{ task.id }}">
+                      <input type="hidden" name="delete" value="yes">
+                      <button>Delete</button>
+
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block footer %}
+  <footer class="footer">
+    <div class="container"><span class="text-muted">Board is created by
+        <a href="{% url 'profile' user.get_username %}">{{ object.admin.username }}</a></span>
+      <span class="about">
+        <a href="{% url 'mf-about' %}">{% trans "About" %}</a>
+      </span></div>
+  </footer>
+{% endblock %}

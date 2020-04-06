@@ -1,0 +1,57 @@
+- extends "base.html"
+- load i18n compress static mf_extras widget_tweaks
+
+{% block title %}{{ object.name }} | {% trans "Boards" %} - {% site_name %}{% endblock %}
+
+- block content
+  .content
+    .container
+      .row
+        .col-sm-3
+          .control-box.p-3
+            %p.text-center.mt-3
+              %a.btn.btn-primary.btn-block(href="{% url 'mf-boards' user.get_username %}") Back to Boards
+            %p.text-center.mt-4
+              %a.btn.btn-success.btn-block(href="/{{ object.admin.username }}/{{ object.id }}/task/create") Add Task
+        .col-sm-9.mt-4.table-responsive
+          %table.table.table-bordered.table-hover.text-center
+            %thead
+              %tr
+                %th.text-left.ml-2(scope="col" style="width: 50%") Task
+                %th(scope="col" style="width: 20%") Assignee
+                %th(scope="col" style="width: 10%") Status
+                %th(scope="col" style="width: 10%") Done?
+                %th(scope="col" style="width: 10%") Delete?
+            %tbody
+              - for task in tasks
+                %tr
+                  %td.text-left= task.text
+                  %td= task.assigned_to
+                  - if task.complete == True
+                    %td Completed
+                    %td
+                      %button(disabled) Done
+                  - else
+                    %td Working
+                    %td
+                      %form(method="post")
+                        - csrf_token
+                        %input(type="hidden" name="action" value="{{ task.id }}")
+                        %button Done
+                  %td
+                    %form(method="post")
+                      - csrf_token
+                      %input(type="hidden" name="action" value="{{ task.id }}")
+                      %input(type="hidden" name="delete" value="yes")
+                      %button Delete
+
+- block footer
+  %footer.footer
+    .container<
+      %span.text-muted<
+        Board is created by
+        %a(href="{% url 'profile' user.get_username %}")<
+          {{ object.admin.username }}
+      %span.about
+        %a(href="{% url 'mf-about' %}")<
+          - trans "About"
