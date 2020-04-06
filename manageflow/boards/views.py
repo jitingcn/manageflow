@@ -65,14 +65,6 @@ def about(request):
 
     return render(request, "about.html", ctx)
 
-
-@login_required
-def boards(request, username):
-    if username == request.user.get_username():
-        return render(request, 'boards/boards.html', {'': ''})
-    return HttpResponseForbidden
-
-
 @login_required
 def create_board(request, username):
     form = CreateNewBoard()
@@ -92,10 +84,10 @@ def create_board(request, username):
 
 
 @login_required
-def dashboard(request):
-    UsersBoards=  Board.objects.filter(admin=request.user)
+def dashboard(request, username):
+    UsersBoards= Board.objects.filter(admin=request.user)
     context = {"board":UsersBoards}
-    return render(request, 'boards/dashboard.html', context)
+    return render(request, 'boards/boards.html', context)
 
 
 def create_task(request,username):

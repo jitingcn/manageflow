@@ -30,6 +30,11 @@ class CreateNewTask(ModelForm):
         model = Task
         fields = ('board', 'text', 'complete', 'assigned_to')
 
+   # def __init__(self, *args, *kwargs):
+   #     kwargs.pop('user')
+   #     super().__init__(*args, **kwargs)
+   #     self.fields['board'].choices = [(board, board.name) for board in user.boards]
+
 
 
 
