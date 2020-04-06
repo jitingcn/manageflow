@@ -1,6 +1,5 @@
 import uuid
 
-
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_save
@@ -8,6 +7,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 from manageflow.accounts.models import User
+
 
 class Board(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -17,7 +17,7 @@ class Board(models.Model):
     description = models.TextField(blank=True, null=True)
 
     class meta:
-        ordering =('name',)
+        ordering = ('name',)
         verbose_name = "board"
         verbose_name_plural = "Boards"
 
@@ -36,7 +36,7 @@ class Board(models.Model):
 
 
 class Task(models.Model):
-    board =  models.ForeignKey(Board, on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=300)
@@ -50,7 +50,6 @@ class Task(models.Model):
     def __str__(self):
         return self.text
 
-
-#class BoardTask(models.Model):
+# class BoardTask(models.Model):
 #    board = models.ForeignKey(Board, models.CASCADE, related_name="board")
 #    task = models.ForeignKey(Task, models.CASCADE)

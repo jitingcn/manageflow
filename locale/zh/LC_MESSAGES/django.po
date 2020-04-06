@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-03 06:09+0000\n"
+"POT-Creation-Date: 2020-04-06 19:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid "Nickname (optional)"
 msgstr "昵称（可选）"
 
 #: templates/accounts/login.html:4 templates/accounts/login.html:14
-#: templates/accounts/login.html:46 templates/base.html:80
+#: templates/accounts/login.html:46 templates/base.html:74
 msgid "Login"
 msgstr "登录"
 
@@ -54,12 +54,27 @@ msgstr ""
 msgid "Forgot Password?"
 msgstr "忘记密码？"
 
+#: templates/accounts/logout.html:4 templates/accounts/logout.html:12
+#: templates/accounts/logout.html:19
+#, fuzzy
+#| msgid "Signup"
+msgid "Sign Out"
+msgstr "注册"
+
+#: templates/accounts/logout.html:13
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: templates/accounts/profile.html:4
+msgid "Profile"
+msgstr ""
+
 #: templates/accounts/signup.html:4
 msgid "Signup"
 msgstr "注册"
 
 #: templates/accounts/signup.html:14 templates/accounts/signup.html:29
-#: templates/base.html:85
+#: templates/base.html:79 templates/boards/welcome.html:11
 msgid "Sign Up"
 msgstr "注册"
 
@@ -76,29 +91,40 @@ msgstr ""
 "        "
 
 #: templates/base.html:31
-msgid "authenticated"
-msgstr "已登录"
+msgid "Welcome"
+msgstr ""
 
-#: templates/base.html:57 templates/base.html:106
+#: templates/base.html:51 templates/base.html:98
 msgid "About"
 msgstr "关于"
 
-#: templates/base.html:60
+#: templates/base.html:54
 msgid "Docs"
 msgstr "文档"
 
-#: templates/base.html:69
+#: templates/base.html:63
 msgid "Site Administration"
 msgstr "站点管理"
 
-#: templates/base.html:74
+#: templates/base.html:68
 msgid "Account Settings"
 msgstr "账户设置"
 
-#: templates/base.html:75
+#: templates/base.html:69
 msgid "Log Out"
 msgstr "注销"
 
-#: templates/boards/create_board.html:20
+#: templates/boards/boards.html:4
+msgid "Boards"
+msgstr ""
+
+#: templates/boards/create_board.html:25
 msgid "Create a Board"
 msgstr ""
+
+#: templates/boards/task.html:29
+msgid "Create a Task"
+msgstr ""
+
+#~ msgid "authenticated"
+#~ msgstr "已登录"
