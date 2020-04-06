@@ -1,4 +1,4 @@
-# manageflow
+# manageflow ![](https://travis-ci.com/jitingcn/manageflow.svg?branch=master)
 
 manageflow is a task manager app for a group of users with multiple roles. (WIP)
 
@@ -50,14 +50,6 @@ in development environment, may vary depending on your operating system.
 
         $ ./manage.py runserver
 
-## Configuration
+* deploy script for linux:
 
-## Database Configuration
-
-## Running in Production
-
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
+        $ ./deploy.sh
