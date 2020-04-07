@@ -12,10 +12,10 @@ install:
   - pipenv install
 
 script:
-  - pipenv run python manage.py makemigrations
-  - pipenv run python manage.py migrate
-  - pipenv run python manage.py compilemessages
-  - pipenv run python manage.py compress --force
-  - pipenv run python manage.py collectstatic --no-input
-  - pipenv run python population_script.py || exit 3
-  - pipenv run python manage.py test
+  - ./manage.py makemigrations
+  - ./manage.py migrate
+  - ./manage.py compilemessages
+  - ./manage.py collectstatic --no-input
+  - ./manage.py compress --force
+  - ./population_script.py || exit 3
+  - ./manage.py test

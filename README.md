@@ -1,4 +1,4 @@
-# manageflow ![](https://travis-ci.com/jitingcn/manageflow.svg?branch=master)
+# manageflow [![Build Status](https://travis-ci.com/jitingcn/manageflow.svg?branch=master)](https://travis-ci.com/jitingcn/manageflow)
 
 manageflow is a task manager app for a group of users with multiple roles. (WIP)
 
