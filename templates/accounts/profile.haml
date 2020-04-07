@@ -3,11 +3,59 @@
 
 {% block title %}{% trans "Profile" %} - {% site_name %}{% endblock %}
 
+- block extra_css
+  %link(rel="stylesheet" href="{% static 'css/profile.scss' %}" type="text/x-scss")
+
 - block content
-  .mt-3
-    <h2>hello, {{ nickname }}</h2>
-    <ul>
-      <li>avatar: {{ user.profile.avatar }}</li>
-      <li>Username: {{ user.username }}</li>
-      <li>bio: {{ user.profile.bio }}</li>
-    </ul>
+  .mt-3.row
+    .col-sm-12
+      %h1 Hello, {{ request.user.username }}
+      %h2.settings-title<
+        Settings
+        %small.text-secondary= user.email
+    - if messages
+      .col-sm-12
+        - for message in messages
+          %p(class="alert alert-#{message.tags}")= message
+    - if owner == False
+      .col-sm-12
+        %p.alert.alert-danger You are not profile owner, read only mode
+  .mt-3.row
+    .col-sm-3
+      %ul.nav.nav-pills
+        %li.active<
+          %a.nav-link(href="{% url 'profile' user.get_username %}") Account
+    .col-sm-9.col-md-6
+      .card
+        .card-body.settings-block
+          %form(method="post")
+            - csrf_token
+            %h3.card-title Personal Detail
+            %p.mt-3
+              Your username name is
+              %code.mx-2= user.username
+              - if owner
+                %button.btn.btn-sm.btn-light.btn-outline-dark.float-right(type="submit" name="change_username") Change Username
+            %p.mt-3
+              Your nickname name is
+              %code.mx-2= user.nickname
+              - if owner
+                %button.btn.btn-sm.btn-light.btn-outline-dark.float-right(type="submit" name="change_nickname") Change Nickname
+            %p.mt-3
+              Your bio is
+              %code.mx-2= user.profile.bio
+              - if owner
+                %button.btn.btn-sm.btn-light.btn-outline-dark.float-right(type="submit" name="set_bio") Set bio
+      - if owner
+        .card.mt-3
+          .card-body.settings-block
+            %form(method="post")
+              - csrf_token
+              %h3.card-title Email and Password
+              %p.mt-3
+                Your account's email address is
+                %code.mx-2= user.email
+                %button.btn.btn-sm.btn-light.btn-outline-dark.float-right(type="submit" name="change_email") Change Email
+              %p.mt-3
+                Change your password
+                %button.btn.btn-sm.btn-light.btn-outline-dark.float-right(type="submit" name="change_password") Change

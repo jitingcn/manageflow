@@ -58,26 +58,27 @@ logout = CustomLogoutView.as_view()
 
 @login_required
 def profile(request, username):
-    user = User.objects.get(username=username)
     if username == request.user.get_username():
-        user_profile = UserProfile.owner_profile
+        user = User.objects.get(username=request.user.get_username())
+        user_profile = UserProfile.objects.get_or_create(owner=user)
+        owner = True
     else:
-        user_profile = user.profile
-    nickname = user.nickname or username
+        user = User.objects.get(username=username)
+        user_profile = UserProfile.objects.get_or_create(owner=user)
+        owner = False
     ctx = {
         "page": "profile",
-        "username": username,
-        "nickname": nickname,
         "profile": user_profile,
         "user": user,
+        "owner": owner,
     }
 
-    if request.method == "POST" and username == request.user.get_username():
+    if request.method == "POST" and username == request.user.get_username() and request.owner:
         if "change_email" in request.POST:
-            user_profile.send_change_email_link()
+            # user_profile.send_change_email_link()
             return redirect(f"{username}/")
-        elif "set_password" in request.POST:
-            user_profile.send_set_password_link()
+        elif "change_password" in request.POST:
+            # user_profile.send_change_password_link()
             return redirect(f"{username}/")
         elif "leave_project" in request.POST:
             code = request.POST["code"]
